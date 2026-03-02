@@ -63,7 +63,7 @@
                             <span class="sidebar-nav-icon">➕</span>
                             <span>Create Event</span>
                         </a>
-                        <a href="${pageContext.request.contextPath}/students?action=new" class="sidebar-nav-item">
+                        <a href="${pageContext.request.contextPath}/students?action=create" class="sidebar-nav-item">
                             <span class="sidebar-nav-icon">👤</span>
                             <span>Add Student</span>
                         </a>
@@ -114,6 +114,11 @@
                         <div class="quick-action-icon">➕</div>
                         <div class="quick-action-title">Create Event</div>
                         <div class="quick-action-desc">Add new event</div>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/students?action=create" class="quick-action-card">
+                        <div class="quick-action-icon">👤</div>
+                        <div class="quick-action-title">Add Student</div>
+                        <div class="quick-action-desc">Create new student</div>
                     </a>
                     <a href="${pageContext.request.contextPath}/students?action=list" class="quick-action-card">
                         <div class="quick-action-icon">👥</div>
