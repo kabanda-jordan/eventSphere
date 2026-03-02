@@ -1,0 +1,34 @@
+========================================
+COPY AND PASTE THIS INTO XAMPP MYSQL
+========================================
+
+1. Open XAMPP Control Panel
+2. Click "Shell" button
+3. Type: mysql -u root
+4. Press Enter
+5. Copy and paste ALL the lines below:
+
+USE eventsphere;
+
+ALTER TABLE users ADD COLUMN two_factor_enabled BOOLEAN DEFAULT FALSE;
+ALTER TABLE users ADD COLUMN two_factor_code VARCHAR(6);
+ALTER TABLE users ADD COLUMN two_factor_expiry TIMESTAMP NULL;
+
+UPDATE users SET two_factor_enabled = FALSE;
+UPDATE users SET two_factor_enabled = TRUE WHERE username = 'admin';
+
+SELECT username, email, two_factor_enabled FROM users;
+
+========================================
+DONE! Now test 2FA:
+========================================
+
+1. Logout from EventSphere
+2. Go to: http://localhost:8080/EventSphere/login.jsp
+3. Login as: admin / admin123
+4. You'll see the 2FA page!
+5. Check your Tomcat console (black window) for the 6-digit code
+6. Enter the code
+7. Done!
+
+========================================
