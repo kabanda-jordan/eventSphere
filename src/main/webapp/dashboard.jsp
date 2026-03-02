@@ -69,6 +69,18 @@
                         </a>
                     </div>
                 </c:if>
+
+                <div class="sidebar-nav-section">
+                    <div class="sidebar-nav-title">Account</div>
+                    <a href="${pageContext.request.contextPath}/settings.jsp" class="sidebar-nav-item">
+                        <span class="sidebar-nav-icon">⚙️</span>
+                        <span>Settings</span>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/help.jsp" class="sidebar-nav-item">
+                        <span class="sidebar-nav-icon">❓</span>
+                        <span>Help & Support</span>
+                    </a>
+                </div>
             </nav>
 
             <!-- Quick Stats -->
