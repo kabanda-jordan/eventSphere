@@ -61,11 +61,11 @@
 
         <div class="sidebar-nav-section">
             <div class="sidebar-nav-title">Account</div>
-            <a href="#" class="sidebar-nav-item">
+            <a href="${pageContext.request.contextPath}/settings.jsp" class="sidebar-nav-item ${pageContext.request.servletPath == '/settings.jsp' ? 'active' : ''}">
                 <span class="sidebar-nav-icon">⚙️</span>
                 <span>Settings</span>
             </a>
-            <a href="#" class="sidebar-nav-item">
+            <a href="${pageContext.request.contextPath}/help.jsp" class="sidebar-nav-item ${pageContext.request.servletPath == '/help.jsp' ? 'active' : ''}">
                 <span class="sidebar-nav-icon">❓</span>
                 <span>Help & Support</span>
             </a>
