@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Student - EventSphere</title>
+    <title>${student != null ? 'Edit' : 'Add'} Student - EventSphere</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
@@ -17,8 +17,8 @@
         <main class="main-content">
             <!-- Header -->
             <div class="main-header">
-                <h1>✏️ Edit Student</h1>
-                <p>Update student information</p>
+                <h1>${student != null ? '✏️ Edit' : '➕ Add'} Student</h1>
+                <p>${student != null ? 'Update' : 'Create new'} student information</p>
             </div>
 
             <!-- Form Card -->
@@ -27,22 +27,63 @@
                     <h2>Student Details</h2>
                 </div>
                 <div class="card-body">
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-error">${error}</div>
+                    </c:if>
+
                     <form action="${pageContext.request.contextPath}/students" method="post">
-                        <input type="hidden" name="action" value="update">
-                        <input type="hidden" name="id" value="${student.id}">
+                        <input type="hidden" name="action" value="${student != null ? 'update' : 'create'}">
+                        <c:if test="${student != null}">
+                            <input type="hidden" name="id" value="${student.id}">
+                        </c:if>
 
-                        <!-- User Info (Read-only) -->
-                        <div class="form-group">
-                            <label>👤 Username</label>
-                            <input type="text" class="form-control" value="${student.username}" disabled>
-                            <small class="text-muted">Username cannot be changed</small>
-                        </div>
+                        <!-- Username (only for new students) -->
+                        <c:choose>
+                            <c:when test="${student == null}">
+                                <div class="form-group">
+                                    <label for="username">👤 Username</label>
+                                    <input type="text" id="username" name="username" class="form-control" 
+                                           placeholder="Enter username" required>
+                                    <small class="text-muted">Unique username for login</small>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="form-group">
+                                    <label>👤 Username</label>
+                                    <input type="text" class="form-control" value="${student.username}" disabled>
+                                    <small class="text-muted">Username cannot be changed</small>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
 
-                        <div class="form-group">
-                            <label>📧 Email</label>
-                            <input type="email" class="form-control" value="${student.email}" disabled>
-                            <small class="text-muted">Email cannot be changed</small>
-                        </div>
+                        <!-- Email -->
+                        <c:choose>
+                            <c:when test="${student == null}">
+                                <div class="form-group">
+                                    <label for="email">📧 Email</label>
+                                    <input type="email" id="email" name="email" class="form-control" 
+                                           placeholder="student@example.com" required>
+                                    <small class="text-muted">Valid email address</small>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="form-group">
+                                    <label>📧 Email</label>
+                                    <input type="email" class="form-control" value="${student.email}" disabled>
+                                    <small class="text-muted">Email cannot be changed</small>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <!-- Password (only for new students) -->
+                        <c:if test="${student == null}">
+                            <div class="form-group">
+                                <label for="password">🔒 Password</label>
+                                <input type="password" id="password" name="password" class="form-control" 
+                                       placeholder="Enter password" required minlength="6">
+                                <small class="text-muted">Minimum 6 characters</small>
+                            </div>
+                        </c:if>
 
                         <!-- Editable Fields -->
                         <div class="form-group">
@@ -85,38 +126,42 @@
                         </div>
 
                         <div class="flex gap-2" style="margin-top: 2rem;">
-                            <button type="submit" class="btn btn-primary">💾 Update Student</button>
+                            <button type="submit" class="btn btn-primary">
+                                ${student != null ? '💾 Update' : '➕ Create'} Student
+                            </button>
                             <a href="${pageContext.request.contextPath}/students?action=list" class="btn btn-secondary">❌ Cancel</a>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Student Info Card -->
-            <div class="card" style="max-width: 800px; margin: 2rem auto;">
-                <div class="card-header">
-                    <h2>📊 Student Statistics</h2>
-                </div>
-                <div class="card-body">
-                    <div class="mini-stats">
-                        <div class="mini-stat-card">
-                            <div class="mini-stat-icon">🎉</div>
-                            <div class="mini-stat-value">0</div>
-                            <div class="mini-stat-label">Events Attended</div>
-                        </div>
-                        <div class="mini-stat-card">
-                            <div class="mini-stat-icon">📝</div>
-                            <div class="mini-stat-value">0</div>
-                            <div class="mini-stat-label">Registrations</div>
-                        </div>
-                        <div class="mini-stat-card">
-                            <div class="mini-stat-icon">💬</div>
-                            <div class="mini-stat-value">0</div>
-                            <div class="mini-stat-label">Messages</div>
+            <!-- Student Info Card (only show for existing students) -->
+            <c:if test="${student != null}">
+                <div class="card" style="max-width: 800px; margin: 2rem auto;">
+                    <div class="card-header">
+                        <h2>📊 Student Statistics</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="mini-stats">
+                            <div class="mini-stat-card">
+                                <div class="mini-stat-icon">🎉</div>
+                                <div class="mini-stat-value">0</div>
+                                <div class="mini-stat-label">Events Attended</div>
+                            </div>
+                            <div class="mini-stat-card">
+                                <div class="mini-stat-icon">📝</div>
+                                <div class="mini-stat-value">0</div>
+                                <div class="mini-stat-label">Registrations</div>
+                            </div>
+                            <div class="mini-stat-card">
+                                <div class="mini-stat-icon">💬</div>
+                                <div class="mini-stat-value">0</div>
+                                <div class="mini-stat-label">Messages</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </c:if>
         </main>
     </div>
 </body>

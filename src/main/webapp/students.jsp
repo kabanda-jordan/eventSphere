@@ -48,14 +48,26 @@
                 </div>
             </div>
 
-            <!-- Search Bar -->
+            <!-- Search and Actions -->
             <div class="card">
-                <form action="${pageContext.request.contextPath}/students" method="get" class="search-bar">
-                    <input type="hidden" name="action" value="list">
-                    <input type="text" name="search" class="form-control" placeholder="🔍 Search students by name, email, department..." value="${param.search}">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </form>
+                <div class="card-body">
+                    <div class="flex justify-between align-center" style="gap: 1rem; flex-wrap: wrap;">
+                        <form action="${pageContext.request.contextPath}/students" method="get" class="search-bar" style="flex: 1; min-width: 300px;">
+                            <input type="hidden" name="action" value="list">
+                            <input type="text" name="search" class="form-control" placeholder="🔍 Search students by name, email, department..." value="${param.search}">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                        <a href="${pageContext.request.contextPath}/students?action=create" class="btn btn-primary" style="white-space: nowrap;">
+                            ➕ Add New Student
+                        </a>
+                    </div>
+                </div>
             </div>
+
+            <!-- Success Message for Created Student -->
+            <c:if test="${param.success == 'created'}">
+                <div class="alert alert-success">✅ Student created successfully!</div>
+            </c:if>
 
             <!-- Students Table -->
             <div class="card">

@@ -40,6 +40,9 @@ public class StudentServlet extends HttpServlet {
                 case "list":
                     listStudents(request, response);
                     break;
+                case "create":
+                    showCreateForm(request, response);
+                    break;
                 case "edit":
                     showEditForm(request, response);
                     break;
@@ -71,7 +74,9 @@ public class StudentServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         try {
-            if ("update".equals(action)) {
+            if ("create".equals(action)) {
+                createStudent(request, response);
+            } else if ("update".equals(action)) {
                 updateStudent(request, response);
             }
         } catch (SQLException e) {
@@ -97,6 +102,11 @@ public class StudentServlet extends HttpServlet {
         request.getRequestDispatcher("/students.jsp").forward(request, response);
     }
 
+    private void showCreateForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/student-form.jsp").forward(request, response);
+    }
+
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         
@@ -105,6 +115,44 @@ public class StudentServlet extends HttpServlet {
         
         request.setAttribute("student", student);
         request.getRequestDispatcher("/student-form.jsp").forward(request, response);
+    }
+
+    private void createStudent(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+        
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String fullName = request.getParameter("fullName");
+        String department = request.getParameter("department");
+        int year = Integer.parseInt(request.getParameter("year"));
+        String phone = request.getParameter("phone");
+
+        // First, create the user account
+        com.eventsphere.dao.UserDAO userDAO = new com.eventsphere.dao.UserDAO();
+        com.eventsphere.model.User user = new com.eventsphere.model.User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setRole("STUDENT");
+        
+        user = userDAO.createUser(user);
+        
+        if (user != null) {
+            // Then create the student profile
+            Student student = new Student();
+            student.setUserId(user.getId());
+            student.setFullName(fullName);
+            student.setDepartment(department);
+            student.setYear(year);
+            student.setPhone(phone);
+            
+            studentDAO.createStudent(student);
+            response.sendRedirect(request.getContextPath() + "/students?action=list&success=created");
+        } else {
+            request.setAttribute("error", "Failed to create user account");
+            request.getRequestDispatcher("/student-form.jsp").forward(request, response);
+        }
     }
 
     private void updateStudent(HttpServletRequest request, HttpServletResponse response)
