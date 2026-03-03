@@ -81,10 +81,38 @@
     </div>
 </aside>
 
+<!-- Theme Toggle Button -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+    <span id="themeIcon">☀️</span>
+</button>
+
 <!-- Mobile Sidebar Toggle -->
 <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
 
 <script>
+    // Theme Toggle Function
+    function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        const themeIcon = document.getElementById('themeIcon');
+        
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Update icon
+        themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+    }
+    
+    // Load saved theme on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        const themeIcon = document.getElementById('themeIcon');
+        
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+    });
+
     function toggleSidebar() {
         document.getElementById('sidebar').classList.toggle('active');
     }
