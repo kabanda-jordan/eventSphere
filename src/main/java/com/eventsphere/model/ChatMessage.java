@@ -5,8 +5,9 @@ import java.sql.Timestamp;
 public class ChatMessage {
     private int id;
     private int senderId;
-    private int receiverId;
+    private Integer receiverId; // Changed to Integer to allow null for broadcasts
     private String message;
+    private String messageType; // DIRECT or BROADCAST
     private Timestamp sentAt;
     private boolean isRead;
     private String senderUsername;
@@ -39,12 +40,20 @@ public class ChatMessage {
         this.senderId = senderId;
     }
 
-    public int getReceiverId() {
+    public Integer getReceiverId() {
         return receiverId;
     }
 
-    public void setReceiverId(int receiverId) {
+    public void setReceiverId(Integer receiverId) {
         this.receiverId = receiverId;
+    }
+
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
     }
 
     public String getMessage() {

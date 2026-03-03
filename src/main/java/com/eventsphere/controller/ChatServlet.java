@@ -55,6 +55,8 @@ public class ChatServlet extends HttpServlet {
         
         if ("send".equals(action)) {
             sendMessage(request, response);
+        } else if ("broadcast".equals(action)) {
+            sendBroadcastMessage(request, response);
         } else if ("markRead".equals(action)) {
             markAsRead(request, response);
         }
@@ -91,7 +93,15 @@ public class ChatServlet extends HttpServlet {
             int userId = (Integer) session.getAttribute("userId");
             int otherUserId = Integer.parseInt(request.getParameter("userId"));
             
-            List<ChatMessage> messages = chatDAO.getConversation(userId, otherUserId, 50);
+            List<ChatMessage> messages;
+            
+            // If otherUserId is 0, return only broadcast messages
+            if (otherUserId == 0) {
+                messages = chatDAO.getBroadcastMessages(50);
+            } else {
+                // Return conversation between two users + broadcast messages
+                messages = chatDAO.getConversation(userId, otherUserId, 50);
+            }
             
             PrintWriter out = response.getWriter();
             out.print(gson.toJson(messages));
@@ -105,27 +115,120 @@ public class ChatServlet extends HttpServlet {
     private void sendMessage(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         
+        System.out.println("=== SEND MESSAGE REQUEST ===");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         
         try {
             HttpSession session = request.getSession(false);
+            System.out.println("Session: " + session);
+            
+            if (session == null) {
+                System.out.println("ERROR: No session!");
+                PrintWriter out = response.getWriter();
+                Map<String, Object> result = new HashMap<>();
+                result.put("success", false);
+                result.put("error", "No session");
+                String json = gson.toJson(result);
+                System.out.println("JSON response: " + json);
+                out.print(json);
+                out.flush();
+                return;
+            }
+            
             int senderId = (Integer) session.getAttribute("userId");
             int receiverId = Integer.parseInt(request.getParameter("receiverId"));
             String message = request.getParameter("message");
+            System.out.println("Sender ID: " + senderId + ", Receiver ID: " + receiverId + ", Message: " + message);
             
             ChatMessage chatMessage = chatDAO.sendMessage(senderId, receiverId, message);
+            System.out.println("Chat message created: " + (chatMessage != null));
             
             Map<String, Object> result = new HashMap<>();
             result.put("success", chatMessage != null);
             result.put("message", chatMessage);
             
+            String json = gson.toJson(result);
+            System.out.println("JSON response: " + json);
+            
             PrintWriter out = response.getWriter();
+            out.print(json);
+            out.flush();
+            System.out.println("Response sent successfully");
+        } catch (Exception e) {
+            System.out.println("ERROR in sendMessage:");
+            e.printStackTrace();
+            PrintWriter out = response.getWriter();
+            Map<String, Object> result = new HashMap<>();
+            result.put("success", false);
+            result.put("error", "Error sending message: " + e.getMessage());
+            String json = gson.toJson(result);
+            System.out.println("Error JSON response: " + json);
+            out.print(json);
+            out.flush();
+        }
+    }
+
+    private void sendBroadcastMessage(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        
+        System.out.println("=== BROADCAST MESSAGE REQUEST ===");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        
+        try {
+            HttpSession session = request.getSession(false);
+            System.out.println("Session: " + session);
+            
+            if (session == null) {
+                System.out.println("ERROR: No session!");
+                Map<String, Object> result = new HashMap<>();
+                result.put("success", false);
+                result.put("error", "No session");
+                out.print(gson.toJson(result));
+                out.flush();
+                return;
+            }
+            
+            int senderId = (Integer) session.getAttribute("userId");
+            String role = (String) session.getAttribute("role");
+            System.out.println("Sender ID: " + senderId + ", Role: " + role);
+            
+            // Only admins can send broadcast messages
+            if (!"ADMIN".equals(role)) {
+                System.out.println("ERROR: Not admin!");
+                Map<String, Object> result = new HashMap<>();
+                result.put("success", false);
+                result.put("error", "Only admins can send broadcast messages");
+                out.print(gson.toJson(result));
+                out.flush();
+                return;
+            }
+            
+            String message = request.getParameter("message");
+            System.out.println("Message: " + message);
+            
+            ChatMessage chatMessage = chatDAO.sendBroadcastMessage(senderId, message);
+            System.out.println("Chat message created: " + (chatMessage != null));
+            
+            Map<String, Object> result = new HashMap<>();
+            result.put("success", chatMessage != null);
+            result.put("message", chatMessage);
+            
+            String json = gson.toJson(result);
+            System.out.println("JSON response: " + json);
+            out.print(json);
+            out.flush();
+            System.out.println("Response sent successfully");
+        } catch (Exception e) {
+            System.out.println("ERROR in sendBroadcastMessage:");
+            e.printStackTrace();
+            Map<String, Object> result = new HashMap<>();
+            result.put("success", false);
+            result.put("error", "Error sending broadcast: " + e.getMessage());
             out.print(gson.toJson(result));
             out.flush();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

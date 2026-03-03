@@ -21,34 +21,58 @@ public class AuthFilter implements Filter {
         
         HttpSession session = httpRequest.getSession(false);
         
-        String loginURI = httpRequest.getContextPath() + "/login.jsp";
-        String registerURI = httpRequest.getContextPath() + "/register.jsp";
-        String loginServlet = httpRequest.getContextPath() + "/login";
-        String registerServlet = httpRequest.getContextPath() + "/register";
-        String diagnosticURI = httpRequest.getContextPath() + "/diagnostic.jsp";
-        String testDbURI = httpRequest.getContextPath() + "/test-db-connection.jsp";
-        String testPasswordURI = httpRequest.getContextPath() + "/test-password.jsp";
-        String fixPasswordURI = httpRequest.getContextPath() + "/fix-passwords.jsp";
-        String checkPasswordURI = httpRequest.getContextPath() + "/check-passwords.jsp";
-        String verify2FAURI = httpRequest.getContextPath() + "/verify-2fa.jsp";
-        String setup2FAURI = httpRequest.getContextPath() + "/setup-2fa.jsp";
-        String enable2FAURI = httpRequest.getContextPath() + "/enable-2fa-now.jsp";
+        String requestURI = httpRequest.getRequestURI();
+        String contextPath = httpRequest.getContextPath();
+        
+        // Public pages (no authentication required)
+        String loginURI = contextPath + "/login.jsp";
+        String registerURI = contextPath + "/register.jsp";
+        String loginServlet = contextPath + "/login";
+        String registerServlet = contextPath + "/register";
+        String indexURI = contextPath + "/index.jsp";
+        String rootURI = contextPath + "/";
+        String captchaServlet = contextPath + "/captcha";
+        String diagnosticURI = contextPath + "/diagnostic.jsp";
+        String testDbURI = contextPath + "/test-db-connection.jsp";
+        String testPasswordURI = contextPath + "/test-password.jsp";
+        String fixPasswordURI = contextPath + "/fix-passwords.jsp";
+        String checkPasswordURI = contextPath + "/check-passwords.jsp";
+        String verify2FAURI = contextPath + "/verify-2fa.jsp";
+        String setup2FAURI = contextPath + "/setup-2fa.jsp";
+        String enable2FAURI = contextPath + "/enable-2fa-now.jsp";
         
         boolean loggedIn = (session != null && session.getAttribute("userId") != null);
-        boolean loginRequest = httpRequest.getRequestURI().equals(loginURI) || 
-                                httpRequest.getRequestURI().equals(loginServlet);
-        boolean registerRequest = httpRequest.getRequestURI().equals(registerURI) || 
-                                   httpRequest.getRequestURI().equals(registerServlet);
-        boolean diagnosticRequest = httpRequest.getRequestURI().equals(diagnosticURI) ||
-                                    httpRequest.getRequestURI().equals(testDbURI) ||
-                                    httpRequest.getRequestURI().equals(testPasswordURI) ||
-                                    httpRequest.getRequestURI().equals(fixPasswordURI) ||
-                                    httpRequest.getRequestURI().equals(checkPasswordURI) ||
-                                    httpRequest.getRequestURI().equals(verify2FAURI) ||
-                                    httpRequest.getRequestURI().equals(setup2FAURI) ||
-                                    httpRequest.getRequestURI().equals(enable2FAURI);
         
-        if (loggedIn || loginRequest || registerRequest || diagnosticRequest) {
+        // Check if request is for public resources
+        boolean isPublicResource = requestURI.equals(loginURI) || 
+                                   requestURI.equals(loginServlet) ||
+                                   requestURI.equals(registerURI) || 
+                                   requestURI.equals(registerServlet) ||
+                                   requestURI.equals(indexURI) ||
+                                   requestURI.equals(rootURI) ||
+                                   requestURI.equals(contextPath) ||
+                                   requestURI.equals(captchaServlet) ||
+                                   requestURI.equals(diagnosticURI) ||
+                                   requestURI.equals(testDbURI) ||
+                                   requestURI.equals(testPasswordURI) ||
+                                   requestURI.equals(fixPasswordURI) ||
+                                   requestURI.equals(checkPasswordURI) ||
+                                   requestURI.equals(verify2FAURI) ||
+                                   requestURI.equals(setup2FAURI) ||
+                                   requestURI.equals(enable2FAURI) ||
+                                   requestURI.startsWith(contextPath + "/css/") ||
+                                   requestURI.startsWith(contextPath + "/js/") ||
+                                   requestURI.startsWith(contextPath + "/images/") ||
+                                   requestURI.endsWith(".css") ||
+                                   requestURI.endsWith(".js") ||
+                                   requestURI.endsWith(".png") ||
+                                   requestURI.endsWith(".jpg") ||
+                                   requestURI.endsWith(".jpeg") ||
+                                   requestURI.endsWith(".gif") ||
+                                   requestURI.endsWith(".svg") ||
+                                   requestURI.endsWith(".ico");
+        
+        if (loggedIn || isPublicResource) {
             chain.doFilter(request, response);
         } else {
             httpResponse.sendRedirect(loginURI);

@@ -39,32 +39,39 @@ public class LoginServlet extends HttpServlet {
         
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String captchaInput = request.getParameter("captcha");
+        
+        HttpSession session = request.getSession();
+        String actualCaptcha = (String) session.getAttribute("captcha");
+        
+        // Verify CAPTCHA first
+        if (captchaInput == null || actualCaptcha == null || !captchaInput.trim().equalsIgnoreCase(actualCaptcha)) {
+            request.setAttribute("error", "Invalid CAPTCHA. Please try again.");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            return;
+        }
+        
+        // Clear CAPTCHA from session after verification
+        session.removeAttribute("captcha");
 
         try {
             User user = userDAO.authenticate(username, password);
             
             if (user != null) {
-                // Check if 2FA is enabled
-                if (user.isTwoFactorEnabled()) {
-                    // Generate and send OTP
-                    String otp = OTPUtil.generateOTP();
-                    userDAO.updateTwoFactorCode(user.getId(), otp, OTPUtil.getOTPExpiry());
-                    
-                    // Send OTP via email (simulated)
-                    EmailUtil.sendOTPEmail(user.getEmail(), otp);
-                    
-                    // Store user ID in session temporarily
-                    HttpSession session = request.getSession();
-                    session.setAttribute("pending2FAUserId", user.getId());
-                    session.setAttribute("pending2FAUsername", user.getUsername());
-                    
-                    // Redirect to 2FA verification page
-                    response.sendRedirect(request.getContextPath() + "/verify-2fa.jsp");
-                } else {
-                    // No 2FA, login directly
-                    createSession(request, user);
-                    response.sendRedirect(request.getContextPath() + "/dashboard");
-                }
+                // 2FA is REQUIRED for ALL users (both ADMIN and STUDENT)
+                // Generate and send OTP
+                String otp = OTPUtil.generateOTP();
+                userDAO.updateTwoFactorCode(user.getId(), otp, OTPUtil.getOTPExpiry());
+                
+                // Send OTP via email (simulated - check console for code)
+                EmailUtil.sendOTPEmail(user.getEmail(), otp);
+                
+                // Store user ID in session temporarily
+                session.setAttribute("pending2FAUserId", user.getId());
+                session.setAttribute("pending2FAUsername", user.getUsername());
+                
+                // Redirect to 2FA verification page
+                response.sendRedirect(request.getContextPath() + "/verify-2fa.jsp");
             } else {
                 request.setAttribute("error", "Invalid username or password");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);

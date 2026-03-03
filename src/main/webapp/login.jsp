@@ -37,6 +37,25 @@
                            placeholder="Enter your password" required>
                 </div>
 
+                <!-- CAPTCHA Section -->
+                <div class="form-group">
+                    <label for="captcha">Verification Code</label>
+                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.5rem;">
+                        <img id="captchaImage" src="" alt="CAPTCHA" 
+                             style="border: 2px solid var(--border); border-radius: 8px; height: 60px; width: 200px; background: var(--bg-secondary);">
+                        <button type="button" onclick="refreshCaptcha()" class="btn btn-secondary btn-sm" 
+                                style="width: auto; padding: 0.5rem 1rem;" title="Refresh CAPTCHA">
+                            🔄
+                        </button>
+                    </div>
+                    <input type="text" id="captcha" name="captcha" class="form-control" 
+                           placeholder="Enter the letters you see above" required maxlength="6"
+                           style="text-transform: uppercase;">
+                    <small style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.25rem; display: block;">
+                        Enter the 6 characters shown in the image above
+                    </small>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Sign In</button>
             </form>
 
@@ -53,6 +72,12 @@
     </button>
 
     <script>
+        // Initialize theme IMMEDIATELY (before page load)
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+        
         // Theme Toggle Function
         function toggleTheme() {
             const html = document.documentElement;
@@ -67,13 +92,34 @@
             themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
         }
         
-        // Load saved theme on page load
+        // CAPTCHA Functions
+        function loadCaptcha() {
+            fetch('${pageContext.request.contextPath}/captcha')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('captchaImage').src = data.image;
+                })
+                .catch(error => {
+                    console.error('Error loading CAPTCHA:', error);
+                });
+        }
+        
+        function refreshCaptcha() {
+            loadCaptcha();
+            document.getElementById('captcha').value = '';
+        }
+        
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Set theme icon based on current theme
             const savedTheme = localStorage.getItem('theme') || 'dark';
             const themeIcon = document.getElementById('themeIcon');
+            if (themeIcon) {
+                themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+            }
             
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+            // Load CAPTCHA
+            loadCaptcha();
         });
     </script>
 </body>

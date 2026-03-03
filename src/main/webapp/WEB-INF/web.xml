@@ -9,7 +9,7 @@
     <description>Event Management System with Chat</description>
 
     <welcome-file-list>
-        <welcome-file>login.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
     <!-- Authentication Filter -->
@@ -20,10 +20,23 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/dashboard</url-pattern>
+        <url-pattern>/dashboard.jsp</url-pattern>
         <url-pattern>/students</url-pattern>
+        <url-pattern>/students.jsp</url-pattern>
         <url-pattern>/events</url-pattern>
+        <url-pattern>/events.jsp</url-pattern>
         <url-pattern>/chat</url-pattern>
-        <url-pattern>*.jsp</url-pattern>
+        <url-pattern>/chat.jsp</url-pattern>
+        <url-pattern>/settings.jsp</url-pattern>
+        <url-pattern>/help.jsp</url-pattern>
+        <url-pattern>/news</url-pattern>
+        <url-pattern>/news.jsp</url-pattern>
+        <url-pattern>/news-detail.jsp</url-pattern>
+        <url-pattern>/news-form.jsp</url-pattern>
+        <url-pattern>/announcements</url-pattern>
+        <url-pattern>/announcements.jsp</url-pattern>
+        <url-pattern>/student-form.jsp</url-pattern>
+        <url-pattern>/event-form.jsp</url-pattern>
     </filter-mapping>
 
     <!-- Login Servlet -->
@@ -94,6 +107,36 @@
     <servlet-mapping>
         <servlet-name>ChatServlet</servlet-name>
         <url-pattern>/chat</url-pattern>
+    </servlet-mapping>
+
+    <!-- News Servlet -->
+    <servlet>
+        <servlet-name>NewsServlet</servlet-name>
+        <servlet-class>com.eventsphere.controller.NewsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NewsServlet</servlet-name>
+        <url-pattern>/news</url-pattern>
+    </servlet-mapping>
+
+    <!-- Announcement Servlet -->
+    <servlet>
+        <servlet-name>AnnouncementServlet</servlet-name>
+        <servlet-class>com.eventsphere.controller.AnnouncementServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AnnouncementServlet</servlet-name>
+        <url-pattern>/announcements</url-pattern>
+    </servlet-mapping>
+
+    <!-- Captcha Servlet -->
+    <servlet>
+        <servlet-name>CaptchaServlet</servlet-name>
+        <servlet-class>com.eventsphere.controller.CaptchaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CaptchaServlet</servlet-name>
+        <url-pattern>/captcha</url-pattern>
     </servlet-mapping>
 
     <session-config>

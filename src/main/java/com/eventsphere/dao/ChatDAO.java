@@ -10,7 +10,7 @@ import java.util.List;
 public class ChatDAO {
 
     public ChatMessage sendMessage(int senderId, int receiverId, String message) throws SQLException {
-        String sql = "INSERT INTO chat_messages (sender_id, receiver_id, message) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO chat_messages (sender_id, receiver_id, message, message_type) VALUES (?, ?, ?, 'DIRECT')";
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -29,6 +29,35 @@ public class ChatDAO {
                         chatMessage.setSenderId(senderId);
                         chatMessage.setReceiverId(receiverId);
                         chatMessage.setMessage(message);
+                        chatMessage.setMessageType("DIRECT");
+                        return chatMessage;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public ChatMessage sendBroadcastMessage(int senderId, String message) throws SQLException {
+        String sql = "INSERT INTO chat_messages (sender_id, receiver_id, message, message_type) VALUES (?, NULL, ?, 'BROADCAST')";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            
+            stmt.setInt(1, senderId);
+            stmt.setString(2, message);
+            
+            int affectedRows = stmt.executeUpdate();
+            
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        ChatMessage chatMessage = new ChatMessage();
+                        chatMessage.setId(generatedKeys.getInt(1));
+                        chatMessage.setSenderId(senderId);
+                        chatMessage.setReceiverId(null);
+                        chatMessage.setMessage(message);
+                        chatMessage.setMessageType("BROADCAST");
                         return chatMessage;
                     }
                 }
@@ -44,9 +73,10 @@ public class ChatDAO {
                      "u2.username as receiver_username " +
                      "FROM chat_messages cm " +
                      "JOIN users u1 ON cm.sender_id = u1.id " +
-                     "JOIN users u2 ON cm.receiver_id = u2.id " +
-                     "WHERE (cm.sender_id = ? AND cm.receiver_id = ?) " +
-                     "OR (cm.sender_id = ? AND cm.receiver_id = ?) " +
+                     "LEFT JOIN users u2 ON cm.receiver_id = u2.id " +
+                     "WHERE ((cm.sender_id = ? AND cm.receiver_id = ?) " +
+                     "OR (cm.sender_id = ? AND cm.receiver_id = ?)) " +
+                     "OR (cm.message_type = 'BROADCAST') " +
                      "ORDER BY cm.sent_at DESC " +
                      "LIMIT ?";
         
@@ -58,6 +88,70 @@ public class ChatDAO {
             stmt.setInt(3, userId2);
             stmt.setInt(4, userId1);
             stmt.setInt(5, limit);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    messages.add(extractChatMessageFromResultSet(rs));
+                }
+            }
+        }
+        
+        // Reverse to show oldest first
+        List<ChatMessage> reversed = new ArrayList<>();
+        for (int i = messages.size() - 1; i >= 0; i--) {
+            reversed.add(messages.get(i));
+        }
+        return reversed;
+    }
+
+    public List<ChatMessage> getBroadcastMessages(int limit) throws SQLException {
+        List<ChatMessage> messages = new ArrayList<>();
+        String sql = "SELECT cm.*, " +
+                     "u1.username as sender_username " +
+                     "FROM chat_messages cm " +
+                     "JOIN users u1 ON cm.sender_id = u1.id " +
+                     "WHERE cm.message_type = 'BROADCAST' " +
+                     "ORDER BY cm.sent_at DESC " +
+                     "LIMIT ?";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, limit);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    messages.add(extractChatMessageFromResultSet(rs));
+                }
+            }
+        }
+        
+        // Reverse to show oldest first
+        List<ChatMessage> reversed = new ArrayList<>();
+        for (int i = messages.size() - 1; i >= 0; i--) {
+            reversed.add(messages.get(i));
+        }
+        return reversed;
+    }
+
+    public List<ChatMessage> getAllMessagesForUser(int userId, int limit) throws SQLException {
+        List<ChatMessage> messages = new ArrayList<>();
+        String sql = "SELECT cm.*, " +
+                     "u1.username as sender_username, " +
+                     "u2.username as receiver_username " +
+                     "FROM chat_messages cm " +
+                     "JOIN users u1 ON cm.sender_id = u1.id " +
+                     "LEFT JOIN users u2 ON cm.receiver_id = u2.id " +
+                     "WHERE (cm.sender_id = ? OR cm.receiver_id = ? OR cm.message_type = 'BROADCAST') " +
+                     "ORDER BY cm.sent_at DESC " +
+                     "LIMIT ?";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, userId);
+            stmt.setInt(2, userId);
+            stmt.setInt(3, limit);
             
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -140,12 +234,38 @@ public class ChatDAO {
         ChatMessage message = new ChatMessage();
         message.setId(rs.getInt("id"));
         message.setSenderId(rs.getInt("sender_id"));
-        message.setReceiverId(rs.getInt("receiver_id"));
+        
+        // Handle nullable receiver_id for broadcast messages
+        int receiverId = rs.getInt("receiver_id");
+        if (!rs.wasNull()) {
+            message.setReceiverId(receiverId);
+        } else {
+            message.setReceiverId(null);
+        }
+        
         message.setMessage(rs.getString("message"));
+        
+        // Handle message_type - check if column exists
+        try {
+            message.setMessageType(rs.getString("message_type"));
+        } catch (SQLException e) {
+            message.setMessageType("DIRECT"); // Default if column doesn't exist
+        }
+        
         message.setSentAt(rs.getTimestamp("sent_at"));
         message.setRead(rs.getBoolean("is_read"));
         message.setSenderUsername(rs.getString("sender_username"));
-        message.setReceiverUsername(rs.getString("receiver_username"));
+        
+        // Handle nullable receiver_username for broadcast messages
+        try {
+            String receiverUsername = rs.getString("receiver_username");
+            if (receiverUsername != null) {
+                message.setReceiverUsername(receiverUsername);
+            }
+        } catch (SQLException e) {
+            // Column doesn't exist in this query
+        }
+        
         return message;
     }
 }

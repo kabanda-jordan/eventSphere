@@ -33,6 +33,14 @@
                 <span class="sidebar-nav-icon">🎉</span>
                 <span>Events</span>
             </a>
+            <a href="${pageContext.request.contextPath}/announcements" class="sidebar-nav-item ${pageContext.request.servletPath == '/announcements.jsp' ? 'active' : ''}">
+                <span class="sidebar-nav-icon">📢</span>
+                <span>Announcements</span>
+            </a>
+            <a href="${pageContext.request.contextPath}/news?action=list" class="sidebar-nav-item ${pageContext.request.servletPath == '/news.jsp' ? 'active' : ''}">
+                <span class="sidebar-nav-icon">📰</span>
+                <span>News</span>
+            </a>
             <c:if test="${sessionScope.role == 'ADMIN'}">
                 <a href="${pageContext.request.contextPath}/students?action=list" class="sidebar-nav-item ${pageContext.request.servletPath == '/students.jsp' ? 'active' : ''}">
                     <span class="sidebar-nav-icon">👥</span>

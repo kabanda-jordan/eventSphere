@@ -97,6 +97,12 @@
     </button>
 
     <script>
+        // Initialize theme IMMEDIATELY (before page load)
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+        
         // Theme Toggle Function
         function toggleTheme() {
             const html = document.documentElement;
@@ -111,13 +117,13 @@
             themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
         }
         
-        // Load saved theme on page load
+        // Set theme icon on page load
         document.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             const themeIcon = document.getElementById('themeIcon');
-            
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+            if (themeIcon) {
+                themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+            }
         });
     </script>
 </body>
