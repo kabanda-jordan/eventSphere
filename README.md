@@ -1,15 +1,34 @@
 # 🎯 EventSphere - Event Management System
 
-A complete, production-ready event management system built with Java Servlets, JSP, and MySQL. Features modern UI, secure authentication with Two-Factor Authentication (2FA), and full CRUD operations.
+A complete, production-ready event management system built with Java Servlets, JSP, and MySQL. Features modern UI, secure authentication with Two-Factor Authentication (2FA), CAPTCHA verification, and full CRUD operations.
 
 ![Java](https://img.shields.io/badge/Java-11+-orange.svg)
 ![Tomcat](https://img.shields.io/badge/Tomcat-11.0-blue.svg)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue.svg)
 ![Maven](https://img.shields.io/badge/Maven-3.6+-red.svg)
 
+## 🎥 Demo Video
+
+Watch the full demonstration of EventSphere in action:
+
+[![EventSphere Demo](https://img.shields.io/badge/▶️_Watch_Demo-Video-red?style=for-the-badge)](./demo/EventSphere-Demo.mp4)
+
+**📹 Video Location:** `demo/EventSphere-Demo.mp4`
+
+The demo video showcases:
+- 🔐 Login with CAPTCHA verification
+- 🎨 Dark/Light theme toggle
+- 📊 Dashboard overview
+- 🎉 Event management (Create, Edit, Delete)
+- 👥 Student management
+- 💬 Real-time chat system
+- ⚙️ Settings and profile management
+- 🔒 Two-Factor Authentication (2FA) flow
+
 ## ✨ Features
 
 ### 🔐 Security
+- **CAPTCHA Verification** - Visual CAPTCHA on login to prevent bots
 - **BCrypt Password Hashing** - Secure password storage
 - **Two-Factor Authentication (2FA)** - Optional OTP verification via email
 - **Session Management** - Secure user sessions with timeout
@@ -35,6 +54,7 @@ A complete, production-ready event management system built with Java Servlets, J
 - Read/unread status
 
 ### 🎨 Modern UI/UX
+- Dark/Light theme toggle with smooth transitions
 - Dark theme with gradient design
 - Vertical sidebar navigation
 - Responsive layout
