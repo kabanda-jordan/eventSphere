@@ -1,0 +1,192 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║              🚀 START TOMCAT SERVER - GUIDE 🚀                 ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+📍 TOMCAT LOCATION:
+C:\Program Files\Apache Software Foundation\Tomcat 11.0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 METHOD 1: Using Startup Script (EASIEST)
+
+STEP 1: Open File Explorer
+STEP 2: Navigate to:
+        C:\Program Files\Apache Software Foundation\Tomcat 11.0\bin
+STEP 3: Double-click: startup.bat
+STEP 4: A black console window will open - DON'T CLOSE IT!
+STEP 5: Wait 10-15 seconds for Tomcat to start
+STEP 6: Open browser and go to:
+        http://localhost:8080/EventSphere/login.jsp
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 METHOD 2: Using Command Prompt
+
+STEP 1: Press Windows + R
+STEP 2: Type: cmd
+STEP 3: Press Enter
+STEP 4: Copy and paste this command:
+
+cd /d "C:\Program Files\Apache Software Foundation\Tomcat 11.0\bin" && startup.bat
+
+STEP 5: Press Enter
+STEP 6: Wait 10-15 seconds
+STEP 7: Open browser and go to:
+        http://localhost:8080/EventSphere/login.jsp
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 METHOD 3: Using PowerShell
+
+STEP 1: Press Windows + X
+STEP 2: Select "Windows PowerShell" or "Terminal"
+STEP 3: Copy and paste this command:
+
+& "C:\Program Files\Apache Software Foundation\Tomcat 11.0\bin\startup.bat"
+
+STEP 4: Press Enter
+STEP 5: Wait 10-15 seconds
+STEP 6: Open browser and go to:
+        http://localhost:8080/EventSphere/login.jsp
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ HOW TO VERIFY TOMCAT IS RUNNING:
+
+1. Look for a black console window with Tomcat logs
+2. The last line should say something like:
+   "Server startup in [xxxx] milliseconds"
+3. OR open browser and go to:
+   http://localhost:8080
+   You should see Tomcat's home page
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ IMPORTANT NOTES:
+
+1. DON'T CLOSE THE BLACK CONSOLE WINDOW!
+   - This is Tomcat running
+   - Closing it will stop the server
+
+2. WAIT FOR DEPLOYMENT
+   - After starting Tomcat, wait 15-20 seconds
+   - The EventSphere.war file needs to be extracted
+   - You'll see deployment messages in the console
+
+3. CHECK FOR ERRORS
+   - Look at the console for any red error messages
+   - Common issues:
+     * Port 8080 already in use
+     * JAVA_HOME not set
+     * Permission issues
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔍 TROUBLESHOOTING:
+
+❌ "Port 8080 already in use"
+   Solution: Stop other programs using port 8080
+   Or restart your computer
+
+❌ "JAVA_HOME not set"
+   Solution: Set JAVA_HOME environment variable
+   Point it to: C:\Program Files\Java\jdk-24
+
+❌ "Access denied"
+   Solution: Run Command Prompt as Administrator
+   Right-click cmd → "Run as administrator"
+
+❌ Console window closes immediately
+   Solution: There's an error in configuration
+   Check JAVA_HOME is set correctly
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🛑 HOW TO STOP TOMCAT:
+
+METHOD 1: Close the console window
+METHOD 2: Press Ctrl+C in the console
+METHOD 3: Run shutdown.bat:
+          C:\Program Files\Apache Software Foundation\Tomcat 11.0\bin\shutdown.bat
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📱 AFTER TOMCAT STARTS:
+
+1. Open your browser
+2. Go to: http://localhost:8080/EventSphere/login.jsp
+3. Login with your credentials
+4. Enjoy your EventSphere application! 🎉
+
+Features to test:
+✅ Login with 2FA (if enabled)
+✅ Dashboard with sidebar
+✅ Create/Edit/Delete Events
+✅ Create/Edit/Delete Students
+✅ Chat system
+✅ Settings page
+✅ Help & Support page
+✅ Dark/Light mode toggle (bottom-right button)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎓 FOR YOUR DEMO:
+
+1. Start Tomcat BEFORE your teacher arrives
+2. Keep the console window visible (shows logs)
+3. Open browser to login page
+4. Have your credentials ready
+5. Show all the features!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ QUICK CHECKLIST:
+
+[ ] XAMPP MySQL is running (green)
+[ ] Tomcat is started (console window open)
+[ ] Waited 15-20 seconds for deployment
+[ ] Browser is open
+[ ] Can access: http://localhost:8080/EventSphere/login.jsp
+[ ] Can login successfully
+[ ] Dashboard loads
+[ ] All features work
+[ ] Dark/Light mode toggle works
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔗 IMPORTANT URLS:
+
+Login Page:
+http://localhost:8080/EventSphere/login.jsp
+
+Dashboard:
+http://localhost:8080/EventSphere/dashboard
+
+Events:
+http://localhost:8080/EventSphere/events?action=list
+
+Students:
+http://localhost:8080/EventSphere/students?action=list
+
+Settings:
+http://localhost:8080/EventSphere/settings.jsp
+
+Help:
+http://localhost:8080/EventSphere/help.jsp
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 YOU'RE READY!
+
+Just start Tomcat using one of the methods above,
+wait for it to fully start, and access your application!
+
+Good luck with your demo! 🚀
+
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║         🏆 READY TO IMPRESS YOUR TEACHER! 🎓                   ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
