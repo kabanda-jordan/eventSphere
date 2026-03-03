@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messages - EventSphere</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         .chat-container {
             display: grid;
@@ -218,20 +219,20 @@
 
         <main class="main-content">
             <div class="main-header">
-                <h1>💬 Messages</h1>
+                <h1><span class="material-icons" style="vertical-align: middle; font-size: 2rem;">chat</span> Messages</h1>
                 <p>Chat with users or send broadcast announcements</p>
             </div>
 
             <div class="chat-container">
                 <div class="chat-users">
                     <div class="chat-users-header">
-                        <h3>👥 Conversations</h3>
+                        <h3><span class="material-icons" style="vertical-align: middle;">group</span> Conversations</h3>
                         <p>${users.size() + 1} available</p>
                     </div>
                     <div class="chat-users-list">
                         <c:if test="${sessionScope.role == 'ADMIN'}">
                             <div class="chat-user-item" onclick="selectBroadcast()">
-                                <div class="chat-avatar broadcast-avatar">📢</div>
+                                <div class="chat-avatar broadcast-avatar"><span class="material-icons">campaign</span></div>
                                 <div style="flex: 1; min-width: 0;">
                                     <div style="font-weight: 600; color: var(--text-primary);">Broadcast Message</div>
                                     <div style="font-size: 0.875rem; color: var(--text-muted);">Send to all users</div>
@@ -266,7 +267,7 @@
                     
                     <div class="chat-messages" id="chatMessages">
                         <div class="empty-state">
-                            <div>💬</div>
+                            <span class="material-icons" style="font-size: 4rem;">chat_bubble_outline</span>
                             <p>Select a user or broadcast to start messaging</p>
                         </div>
                     </div>
@@ -299,9 +300,9 @@
             document.querySelectorAll('.chat-user-item').forEach(item => item.classList.remove('active'));
             event.currentTarget.classList.add('active');
             
-            document.getElementById('chatUsername').textContent = '📢 Broadcast Message';
+            document.getElementById('chatUsername').textContent = 'Broadcast Message';
             document.getElementById('chatStatus').textContent = 'Send announcement to all users';
-            document.getElementById('chatAvatar').textContent = '📢';
+            document.getElementById('chatAvatar').innerHTML = '<span class="material-icons">campaign</span>';
             document.getElementById('chatAvatar').classList.add('broadcast-avatar');
             document.getElementById('chatInputContainer').style.display = 'flex';
             document.getElementById('chatInputContainer').classList.add('broadcast-input');
@@ -363,7 +364,7 @@
             container.innerHTML = '';
             
             if (messages.length === 0) {
-                container.innerHTML = '<div class="empty-state"><div>💬</div><p>No messages yet. Start the conversation!</p></div>';
+                container.innerHTML = '<div class="empty-state"><span class="material-icons" style="font-size: 4rem;">chat_bubble_outline</span><p>No messages yet. Start the conversation!</p></div>';
                 return;
             }
             
@@ -378,7 +379,11 @@
                 
                 const avatar = document.createElement('div');
                 avatar.className = 'chat-avatar' + (isBroadcastMsg ? ' broadcast-avatar' : '');
-                avatar.textContent = isBroadcastMsg ? '📢' : (isSent ? myUsername : currentUsername).substring(0, 1).toUpperCase();
+                if (isBroadcastMsg) {
+                    avatar.innerHTML = '<span class="material-icons">campaign</span>';
+                } else {
+                    avatar.textContent = (isSent ? myUsername : currentUsername).substring(0, 1).toUpperCase();
+                }
                 
                 const messageInner = document.createElement('div');
                 messageInner.style.flex = '1';
@@ -386,7 +391,7 @@
                 if (isBroadcastMsg) {
                     const badge = document.createElement('div');
                     badge.className = 'broadcast-badge';
-                    badge.textContent = '📢 BROADCAST from ' + msg.senderUsername;
+                    badge.innerHTML = '<span class="material-icons" style="vertical-align: middle; font-size: 0.875rem;">campaign</span> BROADCAST from ' + msg.senderUsername;
                     messageInner.appendChild(badge);
                 }
                 

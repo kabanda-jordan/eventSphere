@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventSphere - Campus Event Management Platform</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/landing.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -13,7 +14,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">
-                <span class="logo-icon">🎯</span>
+                <span class="material-icons" style="font-size: 1.75rem; margin-right: 0.5rem;">event_available</span>
                 <span class="logo-text">EventSphere</span>
             </a>
             <ul class="nav-menu">
@@ -299,7 +300,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3 class="footer-logo">
-                        <span class="logo-icon">🎯</span>
+                        <span class="material-icons" style="font-size: 1.75rem; margin-right: 0.5rem;">event_available</span>
                         EventSphere
                     </h3>
                     <p>Your complete campus event management solution. Secure, efficient, and user-friendly.</p>

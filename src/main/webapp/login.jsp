@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - EventSphere</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=2.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <div class="auth-container">
@@ -45,7 +46,7 @@
                              style="border: 2px solid var(--border); border-radius: 8px; height: 60px; width: 200px; background: var(--bg-secondary);">
                         <button type="button" onclick="refreshCaptcha()" class="btn btn-secondary btn-sm" 
                                 style="width: auto; padding: 0.5rem 1rem;" title="Refresh CAPTCHA">
-                            🔄
+                            <span class="material-icons">refresh</span>
                         </button>
                     </div>
                     <input type="text" id="captcha" name="captcha" class="form-control" 
@@ -68,7 +69,7 @@
 
     <!-- Theme Toggle Button -->
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
-        <span id="themeIcon">☀️</span>
+        <span class="material-icons" id="themeIcon">light_mode</span>
     </button>
 
     <script>
@@ -89,7 +90,7 @@
             localStorage.setItem('theme', newTheme);
             
             // Update icon
-            themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+            themeIcon.textContent = newTheme === 'light' ? 'dark_mode' : 'light_mode';
         }
         
         // CAPTCHA Functions

@@ -1,12 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <!-- Vertical Sidebar -->
 <aside class="sidebar" id="sidebar">
     <!-- Logo -->
     <div class="sidebar-header">
         <a href="${pageContext.request.contextPath}/dashboard" class="sidebar-logo">
-            EventSphere
+            <span class="material-icons" style="font-size: 1.75rem; margin-right: 0.5rem;">event_available</span>
+            <span>EventSphere</span>
         </a>
     </div>
 
@@ -26,29 +30,29 @@
         <div class="sidebar-nav-section">
             <div class="sidebar-nav-title">Main Menu</div>
             <a href="${pageContext.request.contextPath}/dashboard" class="sidebar-nav-item ${pageContext.request.servletPath == '/dashboard.jsp' ? 'active' : ''}">
-                <span class="sidebar-nav-icon">📊</span>
+                <span class="material-icons sidebar-nav-icon">dashboard</span>
                 <span>Dashboard</span>
             </a>
             <a href="${pageContext.request.contextPath}/events?action=list" class="sidebar-nav-item ${pageContext.request.servletPath == '/events.jsp' ? 'active' : ''}">
-                <span class="sidebar-nav-icon">🎉</span>
+                <span class="material-icons sidebar-nav-icon">event</span>
                 <span>Events</span>
             </a>
             <a href="${pageContext.request.contextPath}/announcements" class="sidebar-nav-item ${pageContext.request.servletPath == '/announcements.jsp' ? 'active' : ''}">
-                <span class="sidebar-nav-icon">📢</span>
+                <span class="material-icons sidebar-nav-icon">campaign</span>
                 <span>Announcements</span>
             </a>
             <a href="${pageContext.request.contextPath}/news?action=list" class="sidebar-nav-item ${pageContext.request.servletPath == '/news.jsp' ? 'active' : ''}">
-                <span class="sidebar-nav-icon">📰</span>
+                <span class="material-icons sidebar-nav-icon">article</span>
                 <span>News</span>
             </a>
             <c:if test="${sessionScope.role == 'ADMIN'}">
                 <a href="${pageContext.request.contextPath}/students?action=list" class="sidebar-nav-item ${pageContext.request.servletPath == '/students.jsp' ? 'active' : ''}">
-                    <span class="sidebar-nav-icon">👥</span>
+                    <span class="material-icons sidebar-nav-icon">group</span>
                     <span>Students</span>
                 </a>
             </c:if>
             <a href="${pageContext.request.contextPath}/chat?action=page" class="sidebar-nav-item ${pageContext.request.servletPath == '/chat.jsp' ? 'active' : ''}">
-                <span class="sidebar-nav-icon">💬</span>
+                <span class="material-icons sidebar-nav-icon">chat</span>
                 <span>Messages</span>
             </a>
         </div>
@@ -57,11 +61,11 @@
             <div class="sidebar-nav-section">
                 <div class="sidebar-nav-title">Quick Actions</div>
                 <a href="${pageContext.request.contextPath}/events?action=new" class="sidebar-nav-item">
-                    <span class="sidebar-nav-icon">➕</span>
+                    <span class="material-icons sidebar-nav-icon">add_circle</span>
                     <span>Create Event</span>
                 </a>
                 <a href="${pageContext.request.contextPath}/students?action=new" class="sidebar-nav-item">
-                    <span class="sidebar-nav-icon">👤</span>
+                    <span class="material-icons sidebar-nav-icon">person_add</span>
                     <span>Add Student</span>
                 </a>
             </div>
@@ -70,11 +74,11 @@
         <div class="sidebar-nav-section">
             <div class="sidebar-nav-title">Account</div>
             <a href="${pageContext.request.contextPath}/settings.jsp" class="sidebar-nav-item ${pageContext.request.servletPath == '/settings.jsp' ? 'active' : ''}">
-                <span class="sidebar-nav-icon">⚙️</span>
+                <span class="material-icons sidebar-nav-icon">settings</span>
                 <span>Settings</span>
             </a>
             <a href="${pageContext.request.contextPath}/help.jsp" class="sidebar-nav-item ${pageContext.request.servletPath == '/help.jsp' ? 'active' : ''}">
-                <span class="sidebar-nav-icon">❓</span>
+                <span class="material-icons sidebar-nav-icon">help</span>
                 <span>Help & Support</span>
             </a>
         </div>
@@ -83,7 +87,7 @@
     <!-- Logout Button -->
     <div class="sidebar-footer">
         <a href="${pageContext.request.contextPath}/logout" class="sidebar-footer-btn">
-            <span>🚪</span>
+            <span class="material-icons">logout</span>
             <span>Logout</span>
         </a>
     </div>
@@ -91,11 +95,13 @@
 
 <!-- Theme Toggle Button -->
 <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
-    <span id="themeIcon">☀️</span>
+    <span class="material-icons" id="themeIcon">light_mode</span>
 </button>
 
 <!-- Mobile Sidebar Toggle -->
-<button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+<button class="sidebar-toggle" onclick="toggleSidebar()">
+    <span class="material-icons">menu</span>
+</button>
 
 <script>
     // Theme Toggle Function
@@ -109,7 +115,7 @@
         localStorage.setItem('theme', newTheme);
         
         // Update icon
-        themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+        themeIcon.textContent = newTheme === 'light' ? 'dark_mode' : 'light_mode';
     }
     
     // Load saved theme on page load
@@ -118,7 +124,7 @@
         const themeIcon = document.getElementById('themeIcon');
         
         document.documentElement.setAttribute('data-theme', savedTheme);
-        themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+        themeIcon.textContent = savedTheme === 'light' ? 'dark_mode' : 'light_mode';
     });
 
     function toggleSidebar() {

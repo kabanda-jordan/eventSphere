@@ -2,18 +2,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    /* Modern Dark Theme - Indigo/Purple/Cyan */
+    /* Vibrant Blue/Purple/Pink Theme - More Exciting! */
     --primary: #6366f1;
     --primary-dark: #4f46e5;
     --primary-light: #818cf8;
-    --secondary: #8b5cf6;
-    --accent: #06b6d4;
+    --secondary: #a855f7;
+    --accent: #ec4899;
     --success: #10b981;
     --danger: #ef4444;
     --warning: #f59e0b;
-    --info: #3b82f6;
+    --info: #06b6d4;
     
-    /* Dark Backgrounds */
+    /* Dark Backgrounds with more depth */
     --bg-primary: #0f172a;
     --bg-secondary: #1e293b;
     --bg-tertiary: #334155;
@@ -25,18 +25,21 @@
     --text-secondary: #cbd5e1;
     --text-muted: #94a3b8;
     
-    /* Borders & Shadows */
+    /* Borders & Shadows with glow effects */
     --border: #334155;
     --border-light: #475569;
     --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 0 15px rgba(99, 102, 241, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 0 30px rgba(99, 102, 241, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.2);
+    --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.4);
     
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    --gradient-secondary: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
-    --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    /* Exciting Gradients */
+    --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    --gradient-secondary: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    --gradient-success: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    --gradient-danger: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+    --gradient-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
 }
 
 /* Light Mode */
@@ -57,18 +60,10 @@
     --border: #e2e8f0;
     --border-light: #cbd5e1;
     --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.8);
-    --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
-    
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-    --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    --gradient-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 0 15px rgba(99, 102, 241, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 0 30px rgba(99, 102, 241, 0.08);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 0 40px rgba(99, 102, 241, 0.1);
+    --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.2);
 }
 
 * {
@@ -330,7 +325,7 @@ textarea.form-control {
 .btn {
     padding: 0.875rem 1.5rem;
     border: none;
-    border-radius: 12px;
+    border-radius: 16px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -450,7 +445,7 @@ textarea.form-control {
 .card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 20px;
     box-shadow: var(--shadow-md);
     padding: 1.5rem;
     margin-bottom: 1.5rem;
@@ -992,27 +987,28 @@ tbody tr:hover {
     overflow-y: auto;
     z-index: 1000;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    margin: 1rem;
+    height: calc(100vh - 2rem);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
 }
 
 .sidebar-header {
     padding: 2rem 1.5rem;
     border-bottom: 1px solid var(--border);
     background: var(--gradient-primary);
+    border-radius: 20px 20px 0 0;
 }
 
 .sidebar-logo {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: white;
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-}
-
-.sidebar-logo::before {
-    content: "🎯";
-    font-size: 2rem;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .sidebar-user {
@@ -1191,7 +1187,7 @@ tbody tr:hover {
 
 .main-content {
     flex: 1;
-    margin-left: 280px;
+    margin-left: 300px;
     min-height: 100vh;
     padding: 2rem;
 }
@@ -1655,4 +1651,218 @@ body,
         height: 45px;
         font-size: 1.25rem;
     }
+}
+
+
+/* ========== EXCITING DASHBOARD ENHANCEMENTS ========== */
+
+/* Animated Gradient Buttons */
+.btn-primary, .btn-success, .btn-danger {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-primary::before, .btn-success::before, .btn-danger::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before, .btn-success:hover::before, .btn-danger:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover, .btn-success:hover, .btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+}
+
+/* Card Hover Effects */
+.card, .stat-card {
+    transition: all 0.3s ease;
+}
+
+.card:hover, .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Pulse Animation for Stats */
+@keyframes statPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.stat-card:hover .stat-number {
+    animation: statPulse 0.6s ease;
+}
+
+/* Sidebar Active Link Glow */
+.sidebar-link.active {
+    background: var(--gradient-primary);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+/* Table Row Hover Effect */
+.table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: var(--bg-hover);
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+}
+
+/* Form Input Focus Glow */
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2), 0 0 20px rgba(99, 102, 241, 0.3);
+    transform: scale(1.01);
+}
+
+/* Badge Pulse Animation */
+@keyframes badgePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
+    50% { box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); }
+}
+
+.badge {
+    animation: badgePulse 2s infinite;
+}
+
+/* Loading Spinner Enhancement */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner {
+    border: 3px solid var(--border);
+    border-top: 3px solid var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+/* Notification Slide In */
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.notification {
+    animation: slideIn 0.3s ease;
+}
+
+/* Icon Rotation on Hover */
+.sidebar-link:hover .sidebar-icon {
+    transform: rotate(15deg) scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Gradient Text for Headers */
+.main-header h1 {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Chat Message Slide In */
+@keyframes messageSlide {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.message {
+    animation: messageSlide 0.3s ease;
+}
+
+/* Event Card Shimmer Effect */
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+.event-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+    background-size: 1000px 100%;
+    animation: shimmer 3s infinite;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.event-card:hover::after {
+    opacity: 1;
+}
+
+/* Success Animation */
+@keyframes successPop {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.success-message {
+    animation: successPop 0.5s ease;
+}
+
+/* Floating Action Button */
+.fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.fab:hover {
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.6);
+}
+
+/* Progress Bar Animation */
+@keyframes progressFill {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.progress-bar {
+    animation: progressFill 1.5s ease;
 }

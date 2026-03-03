@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Announcements - EventSphere</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <div class="app-layout">
@@ -18,7 +19,7 @@
         <main class="main-content">
             <!-- Header -->
             <div class="main-header">
-                <h1>📢 School Announcements</h1>
+                <h1><span class="material-icons" style="vertical-align: middle; font-size: 2rem;">campaign</span> School Announcements</h1>
                 <p>Important updates and official announcements from the administration</p>
             </div>
 
@@ -26,11 +27,11 @@
             <c:if test="${sessionScope.role == 'ADMIN'}">
                 <div class="card">
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <a href="${pageContext.request.contextPath}/news?action=new" class="btn btn-success" style="width: auto;">
-                            ➕ Post Announcement
+                        <a href="${pageContext.request.contextPath}/news?action=new" class="btn btn-primary" style="width: auto;">
+                            <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">add</span> Post Announcement
                         </a>
                         <a href="${pageContext.request.contextPath}/news?action=list" class="btn btn-secondary" style="width: auto;">
-                            📰 View All News
+                            <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">article</span> View All News
                         </a>
                     </div>
                 </div>
@@ -40,20 +41,20 @@
             <c:if test="${not empty featuredAnnouncements}">
                 <div class="card">
                     <div class="card-header">
-                        <h2>⭐ Important Announcements</h2>
+                        <h2><span class="material-icons" style="vertical-align: middle;">priority_high</span> Important Announcements</h2>
                     </div>
                     <div style="display: grid; gap: 1rem; margin-top: 1rem;">
                         <c:forEach var="announcement" items="${featuredAnnouncements}">
-                            <div class="card" style="background: var(--gradient-danger); color: white; cursor: pointer;" 
+                            <div class="card" style="background: var(--bg-tertiary); border-left: 4px solid var(--primary); cursor: pointer;" 
                                  onclick="window.location.href='${pageContext.request.contextPath}/news?action=view&id=${announcement.id}'">
                                 <div style="display: flex; align-items: start; gap: 1rem;">
-                                    <div style="font-size: 3rem;">📢</div>
+                                    <span class="material-icons" style="font-size: 2.5rem; color: var(--primary);">campaign</span>
                                     <div style="flex: 1;">
-                                        <h3 style="color: white; margin-bottom: 0.5rem; font-size: 1.5rem;">${announcement.title}</h3>
-                                        <p style="opacity: 0.95; margin-bottom: 0.75rem;">${announcement.preview}</p>
-                                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem; opacity: 0.9;">
-                                            <span>📅 <fmt:formatDate value="${announcement.createdAt}" pattern="MMM dd, yyyy"/></span>
-                                            <span>👁️ ${announcement.views} views</span>
+                                        <h3 style="margin-bottom: 0.5rem; font-size: 1.25rem;">${announcement.title}</h3>
+                                        <p style="color: var(--text-secondary); margin-bottom: 0.75rem;">${announcement.preview}</p>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem; color: var(--text-muted);">
+                                            <span><span class="material-icons" style="vertical-align: middle; font-size: 1rem;">event</span> <fmt:formatDate value="${announcement.createdAt}" pattern="MMM dd, yyyy"/></span>
+                                            <span><span class="material-icons" style="vertical-align: middle; font-size: 1rem;">visibility</span> ${announcement.views} views</span>
                                         </div>
                                     </div>
                                 </div>
@@ -66,12 +67,13 @@
             <!-- All Announcements -->
             <div class="card">
                 <div class="card-header">
-                    <h2>📋 All Announcements</h2>
+                    <h2><span class="material-icons" style="vertical-align: middle;">list</span> All Announcements</h2>
                 </div>
 
                 <c:if test="${empty announcements}">
                     <div class="empty-state">
-                        <p>📭 No announcements yet</p>
+                        <span class="material-icons" style="font-size: 4rem; color: var(--text-muted);">inbox</span>
+                        <p>No announcements yet</p>
                         <c:if test="${sessionScope.role == 'ADMIN'}">
                             <a href="${pageContext.request.contextPath}/news?action=new" class="btn btn-primary" style="margin-top: 1rem;">
                                 Post First Announcement
@@ -82,36 +84,38 @@
 
                 <div style="display: grid; gap: 1.5rem; margin-top: 1.5rem;">
                     <c:forEach var="announcement" items="${announcements}">
-                        <div class="card" style="border-left: 4px solid var(--danger); cursor: pointer; transition: all 0.3s ease;" 
+                        <div class="card" style="border-left: 3px solid var(--border-light); cursor: pointer; transition: all 0.3s ease;" 
                              onclick="window.location.href='${pageContext.request.contextPath}/news?action=view&id=${announcement.id}'"
-                             onmouseover="this.style.transform='translateX(8px)'" 
-                             onmouseout="this.style.transform='translateX(0)'">
+                             onmouseover="this.style.borderLeftColor='var(--primary)'; this.style.transform='translateX(4px)'" 
+                             onmouseout="this.style.borderLeftColor='var(--border-light)'; this.style.transform='translateX(0)'">
                             <div style="display: flex; gap: 1.5rem; align-items: start;">
-                                <div style="font-size: 2.5rem; flex-shrink: 0;">📢</div>
+                                <span class="material-icons" style="font-size: 2rem; color: var(--text-muted); flex-shrink: 0;">campaign</span>
                                 <div style="flex: 1;">
                                     <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                        <span class="badge badge-danger">Announcement</span>
+                                        <span class="badge" style="background: var(--bg-tertiary); color: var(--text-primary);">Announcement</span>
                                         <c:if test="${announcement.featured}">
-                                            <span class="badge badge-warning">⭐ Important</span>
+                                            <span class="badge" style="background: var(--primary); color: white;">Important</span>
                                         </c:if>
                                     </div>
-                                    <h3 style="margin-bottom: 0.75rem; color: var(--text-primary); font-size: 1.25rem;">${announcement.title}</h3>
+                                    <h3 style="margin-bottom: 0.75rem; color: var(--text-primary); font-size: 1.125rem;">${announcement.title}</h3>
                                     <p style="color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.6;">${announcement.preview}</p>
                                     <div style="display: flex; gap: 1.5rem; font-size: 0.875rem; color: var(--text-muted);">
-                                        <span>✍️ ${announcement.authorName}</span>
-                                        <span>📅 <fmt:formatDate value="${announcement.createdAt}" pattern="MMM dd, yyyy 'at' HH:mm"/></span>
-                                        <span>👁️ ${announcement.views} views</span>
+                                        <span><span class="material-icons" style="vertical-align: middle; font-size: 1rem;">person</span> ${announcement.authorName}</span>
+                                        <span><span class="material-icons" style="vertical-align: middle; font-size: 1rem;">event</span> <fmt:formatDate value="${announcement.createdAt}" pattern="MMM dd, yyyy 'at' HH:mm"/></span>
+                                        <span><span class="material-icons" style="vertical-align: middle; font-size: 1rem;">visibility</span> ${announcement.views} views</span>
                                     </div>
                                 </div>
                                 <c:if test="${sessionScope.role == 'ADMIN'}">
                                     <div style="display: flex; gap: 0.5rem; flex-shrink: 0;" onclick="event.stopPropagation();">
                                         <a href="${pageContext.request.contextPath}/news?action=edit&id=${announcement.id}" 
-                                           class="btn btn-sm btn-secondary">✏️</a>
+                                           class="btn btn-sm btn-secondary"><span class="material-icons" style="font-size: 1rem;">edit</span></a>
                                         <form action="${pageContext.request.contextPath}/news" method="get" style="display: inline;">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="id" value="${announcement.id}">
                                             <button type="submit" class="btn btn-sm btn-danger" 
-                                                    onclick="return confirm('Delete this announcement?')">🗑️</button>
+                                                    onclick="return confirm('Delete this announcement?')">
+                                                <span class="material-icons" style="font-size: 1rem;">delete</span>
+                                            </button>
                                         </form>
                                     </div>
                                 </c:if>
@@ -122,24 +126,15 @@
             </div>
 
             <!-- Info Card -->
-            <div class="card" style="background: rgba(59, 130, 246, 0.1); border-left: 4px solid var(--info);">
+            <div class="card" style="background: var(--bg-tertiary); border-left: 3px solid var(--info);">
                 <h3 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <span>ℹ️</span>
+                    <span class="material-icons">info</span>
                     <span>About Announcements</span>
                 </h3>
                 <p style="color: var(--text-secondary); line-height: 1.6;">
                     This page shows official school announcements from the administration. 
-                    Check here regularly for important updates about:
+                    Check here regularly for important updates.
                 </p>
-                <ul style="color: var(--text-secondary); margin-top: 0.75rem; margin-left: 1.5rem; line-height: 1.8;">
-                    <li>📚 Academic schedules and deadlines</li>
-                    <li>🎓 Exam dates and results</li>
-                    <li>🏫 School policies and regulations</li>
-                    <li>🎉 Upcoming events and activities</li>
-                    <li>⚠️ Emergency notifications</li>
-                    <li>📅 Holiday schedules</li>
-                    <li>🏆 Awards and achievements</li>
-                </ul>
             </div>
         </main>
     </div>

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events - EventSphere</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <div class="app-layout">
@@ -18,7 +19,7 @@
         <main class="main-content">
             <!-- Header -->
             <div class="main-header">
-                <h1>🎉 Events Management</h1>
+                <h1><span class="material-icons" style="vertical-align: middle; font-size: 2rem;">event</span> Events Management</h1>
                 <p>Browse, create, and manage all events</p>
             </div>
 
@@ -46,13 +47,13 @@
             <div class="quick-actions">
                 <c:if test="${sessionScope.role == 'ADMIN'}">
                     <a href="${pageContext.request.contextPath}/events?action=create" class="quick-action-card">
-                        <div class="quick-action-icon">➕</div>
+                        <div class="quick-action-icon"><span class="material-icons">add_circle</span></div>
                         <div class="quick-action-title">Create Event</div>
                         <div class="quick-action-desc">Add new event</div>
                     </a>
                 </c:if>
                 <div class="quick-action-card" style="cursor: default;">
-                    <div class="quick-action-icon">📊</div>
+                    <div class="quick-action-icon"><span class="material-icons">assessment</span></div>
                     <div class="quick-action-title">${events.size()} Events</div>
                     <div class="quick-action-desc">Total active</div>
                 </div>
@@ -74,14 +75,14 @@
                         <div class="event-header">
                             <h3>${event.title}</h3>
                             <div class="event-date">
-                                📅 <fmt:formatDate value="${event.eventDate}" pattern="MMM dd, yyyy HH:mm"/>
+                                <span class="material-icons" style="vertical-align: middle; font-size: 1rem;">event</span> <fmt:formatDate value="${event.eventDate}" pattern="MMM dd, yyyy HH:mm"/>
                             </div>
                         </div>
                         <div class="event-body">
                             <div class="event-info">
-                                <div class="event-info-item">📍 ${event.location}</div>
+                                <div class="event-info-item"><span class="material-icons" style="vertical-align: middle; font-size: 1rem;">location_on</span> ${event.location}</div>
                                 <div class="event-info-item">
-                                    👥 ${event.registeredCount}/${event.capacity} registered
+                                    <span class="material-icons" style="vertical-align: middle; font-size: 1rem;">group</span> ${event.registeredCount}/${event.capacity} registered
                                 </div>
                                 <div class="event-info-item">
                                     <c:if test="${event.availableSeats > 0}">
@@ -127,7 +128,7 @@
             <!-- Empty State -->
             <c:if test="${empty events}">
                 <div class="empty-state">
-                    <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+                    <span class="material-icons" style="font-size: 4rem; margin-bottom: 1rem; color: var(--text-muted);">event_busy</span>
                     <h2>No events found</h2>
                     <p>Check back later for upcoming events!</p>
                     <c:if test="${sessionScope.role == 'ADMIN'}">
