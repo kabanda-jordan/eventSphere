@@ -1,0 +1,69 @@
+╔══════════════════════════════════════════════════════════════════╗
+║          QUICK EMAIL SETUP FOR EVENTSPHERE 2FA                   ║
+╚══════════════════════════════════════════════════════════════════╝
+
+✅ WHAT'S DONE:
+- JavaMail dependency added to pom.xml
+- EmailUtil.java updated to send real emails via Gmail SMTP
+- Project rebuilt and deployed to Tomcat
+- Email configuration template created
+
+🔧 WHAT YOU NEED TO DO:
+
+STEP 1: Enable 2-Step Verification on Gmail
+   → Go to: https://myaccount.google.com/security
+   → Click "2-Step Verification" and enable it
+
+STEP 2: Generate Gmail App Password
+   → Go to: https://myaccount.google.com/apppasswords
+   → Select "Mail" and "Other (Custom name)"
+   → Type "EventSphere" and click Generate
+   → COPY the 16-character password (like: abcd efgh ijkl mnop)
+
+STEP 3: Configure Email Settings
+   → Open: src/main/resources/email.properties
+   → Replace "your-email@gmail.com" with YOUR Gmail address
+   → Replace "your-app-password-here" with the App Password (no spaces!)
+   
+   Example:
+   mail.from.email=kabanda.jordan@gmail.com
+   mail.smtp.password=abcdefghijklmnop
+
+STEP 4: Rebuild and Restart
+   → Run: mvn clean package
+   → Copy WAR to Tomcat webapps
+   → Restart Tomcat
+
+STEP 5: Test It!
+   → Go to login page
+   → Enter credentials
+   → Check email inbox for OTP code
+   → Enter code and login!
+
+📧 WHAT HAPPENS NOW:
+- When users login, they get a beautiful HTML email
+- Email contains a 6-digit OTP code
+- Code expires in 5 minutes
+- If email fails, OTP shows in Tomcat console as fallback
+
+⚠️ IMPORTANT NOTES:
+- Use App Password, NOT your regular Gmail password!
+- Don't commit email.properties to Git (it's in .gitignore)
+- Check spam folder if email doesn't arrive
+- Make sure user email addresses in database are correct
+
+📁 FILES CREATED:
+- src/main/resources/email.properties (configure this!)
+- src/main/resources/email.properties.template (template)
+- EMAIL_SETUP_GUIDE.md (detailed guide)
+- QUICK_EMAIL_SETUP.txt (this file)
+
+🆘 TROUBLESHOOTING:
+- "EMAIL NOT CONFIGURED" warning? → Configure email.properties
+- Email not received? → Check spam, verify email address in DB
+- Authentication failed? → Double-check App Password
+- Still issues? → Check Tomcat logs for error messages
+
+═══════════════════════════════════════════════════════════════════
+
+Ready to configure? Open email.properties and follow Step 3 above!

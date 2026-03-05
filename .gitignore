@@ -47,3 +47,6 @@ tomcat/
 # Database
 *.db
 *.sqlite
+
+# Email Configuration (contains sensitive credentials)
+src/main/resources/email.properties
