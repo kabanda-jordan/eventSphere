@@ -125,3 +125,49 @@ Good luck with your demo! 🚀
 ║         🏆 READY TO IMPRESS YOUR TEACHER! 🎓                   ║
 ║                                                                ║
 ╚════════════════════════════════════════════════════════════════╝
+
+----------TOMCAT STARTING-------------
+Here are **the exact commands** from your log that were actually used to **start Tomcat** (in order of appearance):
+
+### 1. First (failed) attempt — using `startup.bat` directly
+```powershell
+Start-Process "C:\Program Files\Apache Software Foundation\Tomcat 11.0\bin\startup.bat"
+```
+
+### 2. Second attempt — using `catalina.bat run` (this one actually started the server)
+```powershell
+$env:JAVA_HOME   = "C:\Program Files\Java\jdk-24"
+$env:CATALINA_HOME = "C:\Program Files\Apache Software Foundation\Tomcat 11.0"
+& "$env:CATALINA_HOME\bin\catalina.bat" run
+```
+
+→ **This is the command that successfully started Tomcat** (you saw the logs with version 11.0.15, deployment attempts, etc.)
+
+### 3. Later (most recent) attempt — using `startup.bat` again
+```powershell
+$env:JAVA_HOME="C:\Program Files\Java\jdk-24"
+$env:CATALINA_HOME="C:\Program Files\Apache Software Foundation\Tomcat 11.0"
+& "$env:CATALINA_HOME\bin\startup.bat"
+```
+
+### Quick summary – which one really worked?
+
+| Command style              | Actually started Tomcat? | Runs in foreground? | Recommended?          |
+|----------------------------|---------------------------|----------------------|------------------------|
+| `startup.bat`              | Usually yes              | No (new window)     | Good for background    |
+| `catalina.bat run`         | Yes (in your case)       | Yes (same window)   | Best for debugging     |
+
+### Most reliable / clean way right now (copy-paste ready)
+
+```powershell
+$env:JAVA_HOME     = 'C:\Program Files\Java\jdk-24'
+$env:CATALINA_HOME = 'C:\Program Files\Apache Software Foundation\Tomcat 11.0'
+
+# Option A – shows logs in current window (recommended while developing)
+& "$env:CATALINA_HOME\bin\catalina.bat" run
+
+# Option B – starts in new window (less output in current terminal)
+& "$env:CATALINA_HOME\bin\startup.bat"
+```
+
+Good luck with EventSphere — and good job getting it to the point where it deploys (just fix that duplicate servlet mapping next 😉).
