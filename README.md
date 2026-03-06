@@ -73,6 +73,12 @@ The demo video showcases:
 
 ## 📋 Prerequisites
 
+### For Docker Deployment (Recommended)
+- **Docker** 20.10+ ([Install Docker](https://www.docker.com/products/docker-desktop))
+- **Docker Compose** 2.0+ (included with Docker Desktop)
+- **Git** (for cloning)
+
+### For Manual Deployment
 - Java JDK 11 or higher
 - Apache Tomcat 11.0
 - MySQL 8.0+ (via XAMPP or standalone)
@@ -81,13 +87,44 @@ The demo video showcases:
 
 ## 🚀 Quick Start
 
-### 1. Clone the Repository
+### Option 1: Docker Deployment (Recommended) 🐳
+
+The easiest way to run EventSphere is using Docker:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/kabanda-jordan/eventSphere.git
+cd eventSphere
+
+# 2. Start with Docker Compose
+docker-compose up --build
+
+# 3. Access the application
+# Open: http://localhost:8080/EventSphere/
+```
+
+**That's it!** Docker automatically:
+- ✅ Builds the application
+- ✅ Sets up MySQL database
+- ✅ Initializes schema with sample data
+- ✅ Starts Tomcat server
+- ✅ Configures networking
+
+**📖 Full Docker Guide:** See [DOCKER_DEPLOYMENT.md](DOCKER_DEPLOYMENT.md) for detailed instructions.
+
+---
+
+### Option 2: Manual Deployment (Traditional)
+
+If you prefer manual setup without Docker:
+
+#### 1. Clone the Repository
 ```bash
 git clone https://github.com/kabanda-jordan/eventSphere.git
 cd eventSphere
 ```
 
-### 2. Setup Database
+#### 2. Setup Database
 ```bash
 # Start MySQL (if using XAMPP, start it from XAMPP Control Panel)
 # Then run the schema
@@ -100,18 +137,18 @@ Or manually:
 3. Click "Shell"
 4. Run: `mysql -u root < database/schema.sql`
 
-### 3. Build the Project
+#### 3. Build the Project
 ```bash
 mvn clean package
 ```
 
-### 4. Deploy to Tomcat
+#### 4. Deploy to Tomcat
 ```bash
 # Copy the WAR file to Tomcat webapps
 cp target/EventSphere.war /path/to/tomcat/webapps/
 ```
 
-### 5. Access the Application
+#### 5. Access the Application
 Open your browser and go to:
 ```
 http://localhost:8080/EventSphere/login.jsp

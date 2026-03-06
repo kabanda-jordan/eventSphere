@@ -1,26 +1,41 @@
-# Base image
-FROM ubuntu:24.04
+# Multi-stage Dockerfile for EventSphere
+# Stage 1: Build the application using Maven
+FROM maven:3.9-eclipse-temurin-11 AS builder
 
-# Install Java 21, wget
-RUN apt-get update && \
-    apt-get install -y openjdk-21-jdk wget unzip curl && \
-    rm -rf /var/lib/apt/lists/*
+# Set working directory
+WORKDIR /app
 
-# Set Tomcat environment
-ENV CATALINA_HOME /opt/tomcat
-ENV PATH $CATALINA_HOME/bin:$PATH
+# Copy pom.xml and download dependencies (for better caching)
+COPY pom.xml .
+COPY mysql-connector-j-9.5.0.jar .
 
-# Install Tomcat 11
-RUN wget https://downloads.apache.org/tomcat/tomcat-11/v11.0.5/bin/apache-tomcat-11.0.5.tar.gz -O /tmp/tomcat.tar.gz && \
-    mkdir -p /opt/tomcat && \
-    tar xzvf /tmp/tomcat.tar.gz -C /opt/tomcat --strip-components=1 && \
-    rm /tmp/tomcat.tar.gz
+# Copy source code
+COPY src ./src
 
-# Copy WAR file to Tomcat
-COPY target/EventSphere.war $CATALINA_HOME/webapps/
+# Build the WAR file
+RUN mvn clean package -DskipTests
 
-# Expose port 8080
+# Stage 2: Deploy to Tomcat
+FROM tomcat:11.0-jdk11
+
+# Remove default Tomcat applications
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Copy the WAR file from builder stage
+COPY --from=builder /app/target/EventSphere.war /usr/local/tomcat/webapps/EventSphere.war
+
+# Create directory for logs
+RUN mkdir -p /usr/local/tomcat/logs
+
+# Expose Tomcat port
 EXPOSE 8080
+
+# Set environment variables for JVM
+ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Xmx512m -Xms256m"
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+  CMD curl -f http://localhost:8080/EventSphere/ || exit 1
 
 # Start Tomcat
 CMD ["catalina.sh", "run"]

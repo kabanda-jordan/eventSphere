@@ -1,0 +1,62 @@
+# Maven build artifacts
+target/
+*.war
+*.jar.original
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (not needed in container)
+*.md
+*.txt
+*.pdf
+demo/
+
+# Docker files (avoid recursion)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Logs
+*.log
+logs/
+
+# Test files
+src/test/
+
+# Environment files
+.env
+.env.local
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build tools
+.mvn/
+mvnw
+mvnw.cmd
+
+# Database files (handled by docker-compose)
+*.db
+*.sqlite

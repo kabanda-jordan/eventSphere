@@ -50,3 +50,7 @@ tomcat/
 
 # Email Configuration (contains sensitive credentials)
 src/main/resources/email.properties
+
+# Docker
+.env
+docker-compose.override.yml
