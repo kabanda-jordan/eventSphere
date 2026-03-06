@@ -1,0 +1,14 @@
+# MySQL Dockerfile for Render Deployment
+FROM mysql:8.0
+
+# Copy initialization script
+COPY database/schema.sql /docker-entrypoint-initdb.d/
+
+# Set default environment variables
+ENV MYSQL_DATABASE=eventsphere
+ENV MYSQL_ROOT_PASSWORD=eventsphere_root_2026
+
+# Expose MySQL port
+EXPOSE 3306
+
+# MySQL will automatically run scripts in /docker-entrypoint-initdb.d/

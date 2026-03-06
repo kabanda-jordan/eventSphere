@@ -1,0 +1,49 @@
+# Render Blueprint for EventSphere
+# This file defines all services needed for EventSphere deployment
+
+services:
+  # MySQL Database Service
+  - type: pserv
+    name: eventsphere-db
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile.mysql
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        generateValue: true
+      - key: MYSQL_DATABASE
+        value: eventsphere
+      - key: MYSQL_USER
+        value: eventsphere_user
+      - key: MYSQL_PASSWORD
+        generateValue: true
+    disk:
+      name: mysql-data
+      mountPath: /var/lib/mysql
+      sizeGB: 1
+
+  # Tomcat Application Service
+  - type: web
+    name: eventsphere-app
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DB_HOST
+        fromService:
+          type: pserv
+          name: eventsphere-db
+          property: host
+      - key: DB_PORT
+        value: 3306
+      - key: DB_NAME
+        value: eventsphere
+      - key: DB_USER
+        value: root
+      - key: DB_PASSWORD
+        fromService:
+          type: pserv
+          name: eventsphere-db
+          envVarKey: MYSQL_ROOT_PASSWORD
+      - key: PORT
+        value: 8080
