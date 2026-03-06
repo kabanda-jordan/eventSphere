@@ -15,6 +15,12 @@ COPY src ./src
 # Build the WAR file
 RUN mvn clean package -DskipTests
 
+# Verify WAR file was created
+RUN ls -la /app/target/ && \
+    test -f /app/target/EventSphere.war && \
+    echo "WAR file created successfully" || \
+    (echo "ERROR: WAR file not found!" && exit 1)
+
 # Stage 2: Deploy to Tomcat
 FROM tomcat:11.0-jdk11
 
@@ -24,6 +30,12 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 # Copy the WAR file from builder stage
 COPY --from=builder /app/target/EventSphere.war /usr/local/tomcat/webapps/EventSphere.war
 
+# Verify WAR was copied
+RUN ls -la /usr/local/tomcat/webapps/ && \
+    test -f /usr/local/tomcat/webapps/EventSphere.war && \
+    echo "WAR file deployed to Tomcat" || \
+    (echo "ERROR: WAR file not in webapps!" && exit 1)
+
 # Create directory for logs
 RUN mkdir -p /usr/local/tomcat/logs
 
@@ -32,10 +44,7 @@ EXPOSE 8080
 
 # Set environment variables for JVM
 ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Xmx512m -Xms256m"
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
-  CMD curl -f http://localhost:8080/EventSphere/ || exit 1
+ENV CATALINA_OPTS="-Dfile.encoding=UTF-8"
 
 # Start Tomcat
 CMD ["catalina.sh", "run"]
