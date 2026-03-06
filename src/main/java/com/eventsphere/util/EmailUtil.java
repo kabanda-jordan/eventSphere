@@ -83,7 +83,7 @@ public class EmailUtil {
                     "<div class='otp-code'>" + otp + "</div>" +
                     "<div class='message'><p><strong>This code will expire in 5 minutes.</strong></p>" +
                     "<p>If you didn't request this code, please ignore this email.</p></div>" +
-                    "<div class='footer'><p>© 2024 EventSphere. All rights reserved.</p></div>" +
+                    "<div class='footer'><p>© 2026 EventSphere. All rights reserved.</p></div>" +
                     "</div></body></html>";
 
             message.setContent(htmlBody, "text/html; charset=utf-8");
