@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messages - EventSphere</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-toggle.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/theme-toggle.js"></script>
     <style>
         .chat-container {
             display: grid;
@@ -506,5 +508,10 @@
             if (refreshInterval) clearInterval(refreshInterval);
         });
     </script>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <span class="material-icons" id="themeIcon">light_mode</span>
+    </button>
 </body>
 </html>

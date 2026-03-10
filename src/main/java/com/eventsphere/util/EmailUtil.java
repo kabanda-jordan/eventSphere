@@ -100,4 +100,81 @@ public class EmailUtil {
             return false;
         }
     }
+
+    /**
+     * Send password reset email with verification code
+     */
+    public static boolean sendPasswordResetEmail(String toEmail, String code) {
+        String fromEmail = emailConfig.getProperty("mail.from.email");
+        String fromName = emailConfig.getProperty("mail.from.name", "EventSphere");
+        String password = emailConfig.getProperty("mail.smtp.password");
+
+        // Check configuration
+        if (fromEmail == null || fromEmail.isEmpty() || password == null || password.isEmpty()) {
+            System.err.println("===========================================");
+            System.err.println("⚠️  EMAIL NOT CONFIGURED");
+            System.err.println("===========================================");
+            System.err.println("Please configure email.properties with your Gmail email and app password.");
+            System.err.println("For now, showing password reset code in console:");
+            System.err.println("To: " + toEmail);
+            System.err.println("Reset Code: " + code);
+            System.err.println("===========================================");
+            return true; // Return true to not block the flow
+        }
+
+        try {
+            Properties props = new Properties();
+            props.put("mail.smtp.host", emailConfig.getProperty("mail.smtp.host", "smtp.gmail.com"));
+            props.put("mail.smtp.port", emailConfig.getProperty("mail.smtp.port", "587"));
+            props.put("mail.smtp.auth", emailConfig.getProperty("mail.smtp.auth", "true"));
+            props.put("mail.smtp.starttls.enable", emailConfig.getProperty("mail.smtp.starttls.enable", "true"));
+
+            Session session = Session.getInstance(props, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(fromEmail, password);
+                }
+            });
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromEmail, fromName));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+            message.setSubject("Password Reset - EventSphere");
+
+            String htmlBody = "<!DOCTYPE html>" +
+                    "<html><head><style>" +
+                    "body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }" +
+                    ".container { background-color: white; padding: 30px; border-radius: 0; max-width: 600px; margin: 0 auto; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }" +
+                    ".header { text-align: center; color: #6366F1; margin-bottom: 30px; }" +
+                    ".code-box { background: linear-gradient(135deg, #6366F1 0%, #A855F7 100%); color: white; font-size: 32px; font-weight: bold; padding: 20px; text-align: center; letter-spacing: 8px; margin: 20px 0; }" +
+                    ".message { color: #333; line-height: 1.6; margin: 20px 0; }" +
+                    ".footer { text-align: center; color: #999; font-size: 12px; margin-top: 30px; }" +
+                    ".warning { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 12px; margin: 20px 0; }" +
+                    "</style></head>" +
+                    "<body>" +
+                    "<div class='container'>" +
+                    "<div class='header'><h1>🔐 Password Reset</h1></div>" +
+                    "<div class='message'><p>Hello,</p>" +
+                    "<p>You requested to reset your EventSphere password. Use the verification code below:</p></div>" +
+                    "<div class='code-box'>" + code + "</div>" +
+                    "<div class='message'><p><strong>This code will expire in 5 minutes.</strong></p>" +
+                    "<p>If you didn't request this, please ignore this email and your password will remain unchanged.</p></div>" +
+                    "<div class='warning'><strong>⚠️ Security Tip:</strong> Never share this code with anyone. EventSphere will never ask for your password or verification code.</div>" +
+                    "<div class='footer'><p>© 2026 EventSphere. All rights reserved.</p></div>" +
+                    "</div></body></html>";
+
+            message.setContent(htmlBody, "text/html; charset=utf-8");
+
+            Transport.send(message);
+
+            System.out.println("✅ Password reset email sent successfully to: " + toEmail);
+            return true;
+
+        } catch (MessagingException | IOException e) {
+            System.err.println("❌ Failed to send password reset email to: " + toEmail);
+            e.printStackTrace();
+            System.err.println("FALLBACK - Reset Code: " + code);
+            return false;
+        }
+    }
 }

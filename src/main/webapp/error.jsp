@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error - EventSphere</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-toggle.css">
+    <script src="${pageContext.request.contextPath}/js/theme-toggle.js"></script>
 </head>
 <body>
     <div class="auth-container">
@@ -36,5 +38,10 @@
             </div>
         </div>
     </div>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle auth-page" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <span class="material-icons" id="themeIcon">light_mode</span>
+    </button>
 </body>
 </html>

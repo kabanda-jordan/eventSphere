@@ -1,30 +1,58 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${student != null ? 'Edit' : 'Add'} Student - EventSphere</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/new-design.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-toggle.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="${pageContext.request.contextPath}/js/theme-toggle.js"></script>
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle app-layout" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <span class="material-icons" id="themeIcon">light_mode</span>
+    </button>
+
     <div class="app-layout">
         <!-- Include Sidebar -->
         <jsp:include page="includes/sidebar.jsp" />
 
         <!-- Main Content -->
         <main class="main-content">
+            <!-- Lottie Animation -->
+            <div class="lottie-container lottie-small" style="margin: 0 auto 20px;">
+                <lottie-player 
+                    src="https://assets6.lottiefiles.com/packages/lf20_jcikwtux.json" 
+                    background="transparent" 
+                    speed="1" 
+                    style="width: 100px; height: 100px; margin: 0 auto;" 
+                    loop 
+                    autoplay>
+                </lottie-player>
+            </div>
+
             <!-- Header -->
-            <div class="main-header">
-                <h1>${student != null ? '✏️ Edit' : '➕ Add'} Student</h1>
-                <p>${student != null ? 'Update' : 'Create new'} student information</p>
+            <div class="main-header animate-fade-in">
+                <h1 style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    <span class="material-icons" style="font-size: 2.5rem; vertical-align: middle; margin-right: 12px; color: var(--primary);">${student != null ? 'edit' : 'person_add'}</span>
+                    ${student != null ? 'Edit' : 'Add'} Student
+                </h1>
+                <p style="color: var(--text-secondary);">${student != null ? 'Update' : 'Create new'} student information</p>
             </div>
 
             <!-- Form Card -->
-            <div class="card" style="max-width: 800px; margin: 0 auto;">
-                <div class="card-header">
-                    <h2>Student Details</h2>
+            <div class="card animate-fade-in" style="max-width: 800px; margin: 0 auto;">
+                <div class="card-header" style="border-bottom: 2px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 2rem;">
+                    <h2 style="color: var(--text-primary);">
+                        <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">school</span>
+                        Student Details
+                    </h2>
                 </div>
                 <div class="card-body">
                     <c:if test="${not empty error}">
@@ -164,5 +192,10 @@
             </c:if>
         </main>
     </div>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <span class="material-icons" id="themeIcon">light_mode</span>
+    </button>
 </body>
 </html>

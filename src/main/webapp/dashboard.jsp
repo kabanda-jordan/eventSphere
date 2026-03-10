@@ -7,8 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - EventSphere</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/new-design.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-toggle.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="${pageContext.request.contextPath}/js/theme-toggle.js"></script>
 </head>
 <body>
     <div class="app-layout">
@@ -57,25 +61,74 @@
             <!-- Stats Grid -->
             <div class="dashboard-grid">
                 <div class="stat-card">
-                    <h3>${events.size()}</h3>
-                    <p><span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">event</span> Active Events</p>
+                    <!-- Lottie Animation for Events -->
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <lottie-player 
+                            src="https://assets7.lottiefiles.com/packages/lf20_8wREpI.json" 
+                            background="transparent" 
+                            speed="1" 
+                            style="width: 60px; height: 60px;" 
+                            loop 
+                            autoplay>
+                        </lottie-player>
+                        <div>
+                            <h3>${events.size()}</h3>
+                            <p><span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">event</span> Active Events</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <c:if test="${sessionScope.role == 'STUDENT'}">
                     <div class="stat-card" style="background: var(--gradient-success);">
-                        <h3>${registrations.size()}</h3>
-                        <p><span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">check_circle</span> My Registrations</p>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <lottie-player 
+                                src="https://assets4.lottiefiles.com/packages/lf20_jbrw3hcz.json" 
+                                background="transparent" 
+                                speed="1" 
+                                style="width: 60px; height: 60px;" 
+                                loop 
+                                autoplay>
+                            </lottie-player>
+                            <div>
+                                <h3>${registrations.size()}</h3>
+                                <p><span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">check_circle</span> My Registrations</p>
+                            </div>
+                        </div>
                     </div>
                 </c:if>
 
                 <c:if test="${sessionScope.role == 'ADMIN'}">
                     <div class="stat-card" style="background: var(--gradient-secondary);">
-                        <h3>24</h3>
-                        <p><span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">group</span> Total Students</p>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <lottie-player 
+                                src="https://assets10.lottiefiles.com/packages/lf20_qp1q7mct.json" 
+                                background="transparent" 
+                                speed="1" 
+                                style="width: 60px; height: 60px;" 
+                                loop 
+                                autoplay>
+                            </lottie-player>
+                            <div>
+                                <h3>24</h3>
+                                <p><span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">group</span> Total Students</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="stat-card" style="background: var(--gradient-success);">
-                        <h3>156</h3>
-                        <p><span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">assignment</span> Total Registrations</p>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <lottie-player 
+                                src="https://assets5.lottiefiles.com/packages/lf20_qmfs6c3i.json" 
+                                background="transparent" 
+                                speed="1" 
+                                style="width: 60px; height: 60px;" 
+                                loop 
+                                autoplay>
+                            </lottie-player>
+                            <div>
+                                <h3>156</h3>
+                                <p><span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">assignment</span> Total Registrations</p>
+                            </div>
+                        </div>
                     </div>
                 </c:if>
             </div>
@@ -180,36 +233,13 @@
 
     <!-- Theme Toggle Button -->
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
-        <span id="themeIcon">☀️</span>
+        <span class="material-icons" id="themeIcon">light_mode</span>
     </button>
 
     <!-- Mobile Sidebar Toggle -->
     <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
 
     <script>
-        // Theme Toggle Function
-        function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            const themeIcon = document.getElementById('themeIcon');
-            
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            
-            // Update icon
-            themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
-        }
-        
-        // Load saved theme on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            const themeIcon = document.getElementById('themeIcon');
-            
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
-        });
-
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
         }

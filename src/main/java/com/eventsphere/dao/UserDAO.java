@@ -227,4 +227,40 @@ public class UserDAO {
             return stmt.executeUpdate() > 0;
         }
     }
+    
+    /**
+     * Get user by email address
+     */
+    public User getUserByEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setString(1, email);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return extractUserFromResultSet(rs);
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Update user password
+     */
+    public boolean updatePassword(int userId, String hashedPassword) throws SQLException {
+        String sql = "UPDATE users SET password = ? WHERE id = ?";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setString(1, hashedPassword);
+            stmt.setInt(2, userId);
+            
+            return stmt.executeUpdate() > 0;
+        }
+    }
 }

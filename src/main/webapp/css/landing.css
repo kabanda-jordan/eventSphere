@@ -1,38 +1,43 @@
 /* Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Root Variables - Dark Mode (Default) - More Exciting! */
+/* Root Variables - RICH COLORS & ZERO BORDER RADIUS */
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --secondary: #a855f7;
-    --secondary-dark: #9333ea;
-    --accent: #ec4899;
-    --success: #10b981;
-    --danger: #ef4444;
-    --warning: #f59e0b;
+    /* RICH VIBRANT COLOR PALETTE */
+    --primary: #6366F1;           /* Deep Indigo */
+    --primary-dark: #4F46E5;      /* Darker Indigo */
+    --secondary: #F97316;         /* Vibrant Orange */
+    --secondary-dark: #EA580C;    /* Dark Orange */
+    --accent: #3B82F6;            /* Electric Blue */
+    --success: #10B981;           /* Emerald Green */
+    --danger: #EF4444;            /* Rose Red */
+    --warning: #F59E0B;           /* Amber */
+    --purple: #A855F7;            /* Purple */
+    --pink: #EC4899;              /* Pink */
     
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-card: rgba(30, 41, 59, 0.7);
+    /* DARK BACKGROUNDS */
+    --bg-primary: #0A0A0F;        /* Deep Black */
+    --bg-secondary: #1A1A24;      /* Dark Purple-Black */
+    --bg-card: rgba(30, 30, 46, 0.8);
     --glass-bg: rgba(99, 102, 241, 0.1);
     --glass-border: rgba(99, 102, 241, 0.3);
     
-    --text-primary: #f1f5f9;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B4B4C8;
+    --text-muted: #7E7E9A;
     
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.15);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 40px rgba(99, 102, 241, 0.2);
     --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 60px rgba(99, 102, 241, 0.25);
     
-    --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-    --gradient-secondary: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-    --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    --gradient-primary: linear-gradient(135deg, #6366F1 0%, #A855F7 100%);
+    --gradient-secondary: linear-gradient(135deg, #F97316 0%, #EF4444 100%);
+    --gradient-accent: linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%);
+    --gradient-hero: linear-gradient(135deg, #0A0A0F 0%, #1A1A24 50%, #2A2A3E 100%);
     
-    --navbar-bg: rgba(15, 23, 42, 0.8);
-    --navbar-scrolled: rgba(15, 23, 42, 0.95);
+    --navbar-bg: rgba(26, 26, 36, 0.8);
+    --navbar-scrolled: rgba(26, 26, 36, 0.95);
 }
 
 /* Light Mode Variables */
@@ -58,10 +63,12 @@ body.light-mode {
     --navbar-scrolled: rgba(255, 255, 255, 0.95);
 }
 
+/* GLOBAL RESET - ZERO BORDER RADIUS EVERYWHERE */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    border-radius: 0 !important;
 }
 
 html {
@@ -96,7 +103,7 @@ h1, h2, h3, h4, h5, h6 {
     right: 30px;
     width: 60px;
     height: 60px;
-    border-radius: 50%;
+    border-radius: 0 !important;
     background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     border: none;
     color: white;
@@ -111,7 +118,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .theme-toggle:hover {
-    transform: scale(1.1) rotate(15deg);
+    transform: translateY(-2px);
     box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
 }
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - EventSphere</title>
+    <title>Forgot Password - EventSphere</title>
     <link rel="stylesheet" href="css/new-design.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/theme-toggle.css">
@@ -26,14 +26,13 @@
             background: linear-gradient(135deg, #F8FAFC 0%, #E0E7FF 50%, #F1F5F9 100%);
         }
         
-        .login-container {
+        .forgot-container {
             background: var(--bg-card);
             border: 2px solid var(--border-color);
             padding: 40px;
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             box-shadow: var(--shadow-xl);
-            border-radius: 0 !important;
         }
         
         .logo-section {
@@ -61,22 +60,6 @@
             font-weight: 600;
         }
         
-        .captcha-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .captcha-image {
-            border: 2px solid var(--border-color);
-            border-radius: 0 !important;
-        }
-        
-        .captcha-input {
-            flex: 1;
-        }
-        
         .btn-submit {
             width: 100%;
             padding: 16px;
@@ -88,7 +71,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-primary);
-            border-radius: 0 !important;
         }
         
         .btn-submit:hover {
@@ -96,28 +78,19 @@
             box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5);
         }
         
-        .links-section {
+        .back-link {
             text-align: center;
-            margin-top: 25px;
+            margin-top: 20px;
         }
         
-        .links-section a {
+        .back-link a {
             color: var(--primary);
             text-decoration: none;
             font-weight: 600;
-            margin: 0 10px;
         }
         
-        .links-section a:hover {
+        .back-link a:hover {
             color: var(--primary-light);
-        }
-        
-        .forgot-password {
-            color: var(--secondary) !important;
-        }
-        
-        .forgot-password:hover {
-            color: var(--secondary-light) !important;
         }
         
         .error-message {
@@ -126,7 +99,6 @@
             padding: 12px;
             margin-bottom: 20px;
             color: var(--danger-light);
-            border-radius: 0 !important;
         }
         
         .success-message {
@@ -135,19 +107,25 @@
             padding: 12px;
             margin-bottom: 20px;
             color: var(--success-light);
-            border-radius: 0 !important;
+        }
+        
+        .info-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="login-container animate-fade-in">
+    <div class="forgot-container animate-fade-in">
         <!-- Lottie Animation -->
         <div class="lottie-container lottie-medium" style="margin: 0 auto 20px;">
+            <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
             <lottie-player 
                 src="https://assets2.lottiefiles.com/packages/lf20_uu0x8lqv.json" 
                 background="transparent" 
                 speed="1" 
-                style="width: 120px; height: 120px; margin: 0 auto;" 
+                style="width: 150px; height: 150px; margin: 0 auto;" 
                 loop 
                 autoplay>
             </lottie-player>
@@ -155,10 +133,10 @@
         
         <div class="logo-section">
             <h1>
-                <span class="material-icons" style="font-size: 2.5rem; vertical-align: middle;">event_available</span>
-                EventSphere
+                <span class="material-icons" style="font-size: 2.5rem; vertical-align: middle;">lock_reset</span>
+                Forgot Password
             </h1>
-            <p style="color: var(--text-secondary);">Welcome back! Please sign in to your account</p>
+            <p style="color: var(--text-secondary);">Enter your email to receive a verification code</p>
         </div>
         
         <% if (request.getAttribute("error") != null) { %>
@@ -175,69 +153,34 @@
             </div>
         <% } %>
         
-        <form action="<%= request.getContextPath() %>/login" method="post">
+        <form action="<%= request.getContextPath() %>/forgot-password" method="post">
             <div class="form-group">
-                <label for="username">
-                    <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">person</span>
-                    Username
+                <label for="email">
+                    <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">email</span>
+                    Email Address
                 </label>
                 <input 
-                    type="text" 
-                    id="username" 
-                    name="username" 
-                    placeholder="Enter your username" 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Enter your registered email" 
                     required
-                    autocomplete="username">
-            </div>
-            
-            <div class="form-group">
-                <label for="password">
-                    <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">lock</span>
-                    Password
-                </label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    placeholder="Enter your password" 
-                    required
-                    autocomplete="current-password">
-            </div>
-            
-            <div class="captcha-container">
-                <img src="<%= request.getContextPath() %>/captcha" 
-                     alt="CAPTCHA" 
-                     class="captcha-image"
-                     onclick="this.src='<%= request.getContextPath() %>/captcha?' + Math.random()">
-                <input 
-                    type="text" 
-                    name="captcha" 
-                    placeholder="Enter CAPTCHA" 
-                    class="captcha-input"
-                    required
-                    autocomplete="off">
+                    autocomplete="email">
+                <p class="info-text">
+                    We'll send a 6-digit verification code to this email address.
+                </p>
             </div>
             
             <button type="submit" class="btn-submit">
-                <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">login</span>
-                Sign In
+                <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">send</span>
+                Send Verification Code
             </button>
         </form>
         
-        <div class="links-section">
-            <a href="<%= request.getContextPath() %>/forgot-password" class="forgot-password">
-                <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">lock_reset</span>
-                Forgot Password?
-            </a>
-            <br><br>
-            <a href="<%= request.getContextPath() %>/register.jsp">
-                <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">person_add</span>
-                Create Account
-            </a>
-            |
-            <a href="<%= request.getContextPath() %>/">
-                <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">home</span>
-                Back to Home
+        <div class="back-link">
+            <a href="<%= request.getContextPath() %>/login.jsp">
+                <span class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">arrow_back</span>
+                Back to Login
             </a>
         </div>
     </div>

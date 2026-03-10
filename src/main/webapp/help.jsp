@@ -1,49 +1,83 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Help & Support - EventSphere</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/new-design.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-toggle.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="${pageContext.request.contextPath}/js/theme-toggle.js"></script>
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle app-layout" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <span class="material-icons" id="themeIcon">light_mode</span>
+    </button>
+
     <div class="app-layout">
         <!-- Include Sidebar -->
         <jsp:include page="includes/sidebar.jsp" />
 
         <!-- Main Content -->
         <main class="main-content">
+            <!-- Lottie Animation -->
+            <div class="lottie-container lottie-small" style="margin: 0 auto 20px;">
+                <lottie-player 
+                    src="https://assets3.lottiefiles.com/packages/lf20_M9p23l.json" 
+                    background="transparent" 
+                    speed="1" 
+                    style="width: 100px; height: 100px; margin: 0 auto;" 
+                    loop 
+                    autoplay>
+                </lottie-player>
+            </div>
+
             <!-- Header -->
-            <div class="main-header">
-                <h1>❓ Help & Support</h1>
-                <p>Get help with EventSphere features and functionality</p>
+            <div class="main-header animate-fade-in">
+                <h1 style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    <span class="material-icons" style="font-size: 2.5rem; vertical-align: middle; margin-right: 12px; color: var(--primary);">help</span>
+                    Help & Support
+                </h1>
+                <p style="color: var(--text-secondary);">Get help with EventSphere features and functionality</p>
             </div>
 
             <!-- Quick Help Cards -->
-            <div class="quick-actions">
+            <div class="quick-actions animate-fade-in">
                 <div class="quick-action-card">
-                    <div class="quick-action-icon">📚</div>
+                    <div class="quick-action-icon">
+                        <span class="material-icons" style="font-size: 2.5rem; color: var(--primary);">menu_book</span>
+                    </div>
                     <div class="quick-action-title">Documentation</div>
                     <div class="quick-action-desc">View guides</div>
                 </div>
                 <div class="quick-action-card">
-                    <div class="quick-action-icon">🎥</div>
+                    <div class="quick-action-icon">
+                        <span class="material-icons" style="font-size: 2.5rem; color: var(--secondary);">play_circle</span>
+                    </div>
                     <div class="quick-action-title">Video Tutorials</div>
                     <div class="quick-action-desc">Watch demos</div>
                 </div>
                 <div class="quick-action-card">
-                    <div class="quick-action-icon">💬</div>
+                    <div class="quick-action-icon">
+                        <span class="material-icons" style="font-size: 2.5rem; color: var(--accent);">support_agent</span>
+                    </div>
                     <div class="quick-action-title">Contact Support</div>
                     <div class="quick-action-desc">Get in touch</div>
                 </div>
             </div>
 
             <!-- FAQ Section -->
-            <div class="card">
-                <div class="card-header">
-                    <h2>🔍 Frequently Asked Questions</h2>
+            <div class="card animate-fade-in">
+                <div class="card-header" style="border-bottom: 2px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 2rem;">
+                    <h2 style="color: var(--text-primary);">
+                        <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">quiz</span>
+                        Frequently Asked Questions
+                    </h2>
                 </div>
                 <div class="card-body">
                     <div class="faq-item">
@@ -319,5 +353,10 @@
             </style>
         </main>
     </div>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle app-layout" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <span class="material-icons" id="themeIcon">light_mode</span>
+    </button>
 </body>
 </html>

@@ -5,9 +5,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventSphere - Campus Event Management Platform</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/new-design.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/landing.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-toggle.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="${pageContext.request.contextPath}/js/theme-toggle.js"></script>
+    <style>
+        /* Override landing.css with new design - ZERO BORDER RADIUS */
+        * {
+            border-radius: 0 !important;
+        }
+        
+        .btn, .btn-primary, .btn-secondary, .btn-cta, .btn-register, .event-btn {
+            border-radius: 0 !important;
+            background: var(--gradient-primary);
+            box-shadow: var(--shadow-primary);
+        }
+        
+        .btn-secondary {
+            background: var(--gradient-secondary) !important;
+            box-shadow: var(--shadow-secondary);
+        }
+        
+        .btn-cta {
+            background: var(--gradient-accent) !important;
+            box-shadow: var(--shadow-accent);
+        }
+        
+        .feature-card, .event-card, .testimonial-card, .step-card {
+            border-radius: 0 !important;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+        }
+        
+        .navbar {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #0A0A0F 0%, #1A1A24 50%, #2A2A3E 100%);
+        }
+        
+        .floating-card {
+            border-radius: 0 !important;
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+        }
+        
+        .lottie-hero {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -70,16 +123,49 @@
                 </div>
             </div>
             <div class="hero-image">
+                <!-- Main Lottie Animation -->
+                <div class="lottie-hero">
+                    <lottie-player 
+                        src="https://assets3.lottiefiles.com/packages/lf20_touohxv0.json" 
+                        background="transparent" 
+                        speed="1" 
+                        style="width: 100%; height: 100%;" 
+                        loop 
+                        autoplay>
+                    </lottie-player>
+                </div>
+                
                 <div class="floating-card card-1">
-                    <i class="fas fa-calendar-check"></i>
+                    <lottie-player 
+                        src="https://assets4.lottiefiles.com/packages/lf20_jbrw3hcz.json" 
+                        background="transparent" 
+                        speed="1" 
+                        style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;" 
+                        loop 
+                        autoplay>
+                    </lottie-player>
                     <span>Event Registered</span>
                 </div>
                 <div class="floating-card card-2">
-                    <i class="fas fa-users"></i>
+                    <lottie-player 
+                        src="https://assets10.lottiefiles.com/packages/lf20_qp1q7mct.json" 
+                        background="transparent" 
+                        speed="1" 
+                        style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;" 
+                        loop 
+                        autoplay>
+                    </lottie-player>
                     <span>50 Attendees</span>
                 </div>
                 <div class="floating-card card-3">
-                    <i class="fas fa-bell"></i>
+                    <lottie-player 
+                        src="https://assets8.lottiefiles.com/packages/lf20_jtbfg2nb.json" 
+                        background="transparent" 
+                        speed="1" 
+                        style="width: 30px; height: 30px; display: inline-block; vertical-align: middle;" 
+                        loop 
+                        autoplay>
+                    </lottie-player>
                     <span>New Announcement</span>
                 </div>
             </div>
@@ -96,42 +182,84 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
+                        <lottie-player 
+                            src="https://assets2.lottiefiles.com/packages/lf20_uu0x8lqv.json" 
+                            background="transparent" 
+                            speed="1" 
+                            style="width: 60px; height: 60px;" 
+                            loop 
+                            autoplay>
+                        </lottie-player>
                     </div>
                     <h3>Secure Authentication</h3>
                     <p>Multi-layer security with CAPTCHA, BCrypt password hashing, and Two-Factor Authentication (2FA) for maximum protection.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-calendar-alt"></i>
+                        <lottie-player 
+                            src="https://assets7.lottiefiles.com/packages/lf20_8wREpI.json" 
+                            background="transparent" 
+                            speed="1" 
+                            style="width: 60px; height: 60px;" 
+                            loop 
+                            autoplay>
+                        </lottie-player>
                     </div>
                     <h3>Smart Event Management</h3>
                     <p>Create, update, and manage events with ease. Track registrations, capacity, and status in real-time.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-user-graduate"></i>
+                        <lottie-player 
+                            src="https://assets5.lottiefiles.com/packages/lf20_qmfs6c3i.json" 
+                            background="transparent" 
+                            speed="1" 
+                            style="width: 60px; height: 60px;" 
+                            loop 
+                            autoplay>
+                        </lottie-player>
                     </div>
                     <h3>Student Dashboard</h3>
                     <p>Personalized dashboard to track registered events, view announcements, and manage your profile seamlessly.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
+                        <lottie-player 
+                            src="https://assets9.lottiefiles.com/packages/lf20_a2chheio.json" 
+                            background="transparent" 
+                            speed="1" 
+                            style="width: 60px; height: 60px;" 
+                            loop 
+                            autoplay>
+                        </lottie-player>
                     </div>
                     <h3>Real-Time Capacity Control</h3>
                     <p>Automatic capacity management prevents overbooking and ensures fair event registration for all students.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-user-shield"></i>
+                        <lottie-player 
+                            src="https://assets9.lottiefiles.com/packages/lf20_xyadoh9h.json" 
+                            background="transparent" 
+                            speed="1" 
+                            style="width: 60px; height: 60px;" 
+                            loop 
+                            autoplay>
+                        </lottie-player>
                     </div>
                     <h3>Role-Based Access</h3>
                     <p>Separate permissions for admins and students. Secure, organized, and efficient access control.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-comments"></i>
+                        <lottie-player 
+                            src="https://assets6.lottiefiles.com/packages/lf20_ystsffqy.json" 
+                            background="transparent" 
+                            speed="1" 
+                            style="width: 60px; height: 60px;" 
+                            loop 
+                            autoplay>
+                        </lottie-player>
                     </div>
                     <h3>Real-Time Chat</h3>
                     <p>Built-in messaging system for instant communication between students and event organizers.</p>
@@ -345,8 +473,8 @@
     </footer>
 
     <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <span id="themeIcon">🌙</span>
+    <button class="theme-toggle landing-page" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <span id="themeIcon">☀️</span>
     </button>
 
     <script src="${pageContext.request.contextPath}/js/landing.js"></script>
