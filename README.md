@@ -1,4 +1,4 @@
-# 🎯 EventSphere - Event Management System
+# 🗓️ EventSphere - Event Management System
 
 A complete, production-ready event management system built with Java Servlets, JSP, and MySQL. Features modern UI, secure authentication with Two-Factor Authentication (2FA), CAPTCHA verification, and full CRUD operations.
 
