@@ -13,13 +13,8 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="${pageContext.request.contextPath}/js/theme-toggle.js"></script>
     <style>
-        /* Override landing.css with new design - ZERO BORDER RADIUS */
-        * {
-            border-radius: 0 !important;
-        }
-        
+        /* Override landing.css with new design */
         .btn, .btn-primary, .btn-secondary, .btn-cta, .btn-register, .event-btn {
-            border-radius: 0 !important;
             background: var(--gradient-primary);
             box-shadow: var(--shadow-primary);
         }
@@ -35,7 +30,6 @@
         }
         
         .feature-card, .event-card, .testimonial-card, .step-card {
-            border-radius: 0 !important;
             background: var(--bg-card);
             border: 2px solid var(--border-color);
         }
@@ -50,7 +44,6 @@
         }
         
         .floating-card {
-            border-radius: 0 !important;
             background: var(--bg-card);
             border: 2px solid var(--primary);
         }
