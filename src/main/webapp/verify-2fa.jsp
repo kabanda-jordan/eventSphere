@@ -34,7 +34,7 @@
             width: 100%;
             max-width: 500px;
             box-shadow: var(--shadow-xl);
-            border-radius: 0 !important;
+            border-radius: 20px;
             transition: all 0.3s ease;
         }
         
@@ -66,7 +66,7 @@
             font-size: 2rem;
             text-align: center;
             border: 2px solid var(--border-color);
-            border-radius: 0 !important;
+            border-radius: 12px;
             background: var(--bg-tertiary);
             color: var(--text-primary);
             font-weight: 700;
@@ -96,7 +96,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-primary);
-            border-radius: 0 !important;
+            border-radius: 12px;
             margin-top: 1rem;
         }
         
@@ -117,7 +117,7 @@
             padding: 16px;
             margin-bottom: 20px;
             color: var(--accent-light);
-            border-radius: 0 !important;
+            border-radius: 8px;
         }
         
         .warning-message {
@@ -126,7 +126,7 @@
             padding: 16px;
             margin-top: 20px;
             color: var(--warning-light);
-            border-radius: 0 !important;
+            border-radius: 8px;
         }
         
         .error-message {
@@ -135,7 +135,7 @@
             padding: 12px;
             margin-bottom: 20px;
             color: var(--danger-light);
-            border-radius: 0 !important;
+            border-radius: 8px;
         }
         
         .back-link {

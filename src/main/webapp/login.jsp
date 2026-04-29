@@ -33,7 +33,7 @@
             width: 100%;
             max-width: 450px;
             box-shadow: var(--shadow-xl);
-            border-radius: 0 !important;
+            border-radius: 20px;
         }
         
         .logo-section {
@@ -70,7 +70,7 @@
         
         .captcha-image {
             border: 2px solid var(--border-color);
-            border-radius: 0 !important;
+            border-radius: 8px;
         }
         
         .captcha-input {
@@ -88,7 +88,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-primary);
-            border-radius: 0 !important;
+            border-radius: 12px;
         }
         
         .btn-submit:hover {
@@ -126,7 +126,7 @@
             padding: 12px;
             margin-bottom: 20px;
             color: var(--danger-light);
-            border-radius: 0 !important;
+            border-radius: 8px;
         }
         
         .success-message {
@@ -135,7 +135,7 @@
             padding: 12px;
             margin-bottom: 20px;
             color: var(--success-light);
-            border-radius: 0 !important;
+            border-radius: 8px;
         }
     </style>
 </head>

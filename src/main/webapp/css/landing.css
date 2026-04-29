@@ -1,7 +1,7 @@
 /* Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Root Variables - RICH COLORS & ZERO BORDER RADIUS */
+/* Root Variables - RICH COLORS */
 :root {
     /* RICH VIBRANT COLOR PALETTE */
     --primary: #6366F1;           /* Deep Indigo */
@@ -63,12 +63,11 @@ body.light-mode {
     --navbar-scrolled: rgba(255, 255, 255, 0.95);
 }
 
-/* GLOBAL RESET - ZERO BORDER RADIUS EVERYWHERE */
+/* GLOBAL RESET */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    border-radius: 0 !important;
 }
 
 html {
@@ -103,7 +102,7 @@ h1, h2, h3, h4, h5, h6 {
     right: 30px;
     width: 60px;
     height: 60px;
-    border-radius: 0 !important;
+    border-radius: 50%;
     background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     border: none;
     color: white;

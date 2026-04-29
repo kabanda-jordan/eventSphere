@@ -57,7 +57,7 @@
             width: 100%;
             max-width: 500px;
             box-shadow: var(--shadow-xl);
-            border-radius: 0 !important;
+            border-radius: 20px;
             transition: all 0.3s ease;
         }
         
@@ -103,7 +103,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-secondary);
-            border-radius: 0 !important;
+            border-radius: 12px;
         }
         
         .btn-submit:hover {
@@ -134,7 +134,7 @@
             padding: 12px;
             margin-bottom: 20px;
             color: var(--danger-light);
-            border-radius: 0 !important;
+            border-radius: 8px;
         }
         
         .success-message {
@@ -143,7 +143,7 @@
             padding: 12px;
             margin-bottom: 20px;
             color: var(--success-light);
-            border-radius: 0 !important;
+            border-radius: 8px;
         }
         
         /* Theme Toggle Button */
@@ -164,7 +164,7 @@
             box-shadow: var(--shadow-lg);
             transition: all 0.3s ease;
             z-index: 1000;
-            border-radius: 0 !important;
+            border-radius: 50%;
         }
         
         .theme-toggle:hover {
